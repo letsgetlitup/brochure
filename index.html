@@ -88,7 +88,20 @@ mark{background:linear-gradient(transparent 58%,rgba(243,22,39,.35) 58%);color:i
 .board{position:relative;isolation:isolate;margin-bottom:18px}
 .board > svg.blob{position:absolute;z-index:0;pointer-events:none;overflow:visible}
 .board > .board-in{position:relative;z-index:1;border-radius:18px;overflow:hidden;line-height:0}
-.board > .board-in > img{width:100%;height:auto}
+.board > .board-in > img,.board > .board-in > video{width:100%;height:auto;display:block}
+.clipwrap{position:relative}
+.snd{
+  position:absolute;right:10px;bottom:10px;z-index:3;
+  width:38px;height:38px;border-radius:50%;border:0;cursor:pointer;
+  background:rgba(10,9,16,.62);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  color:#fff;font-size:16px;line-height:1;display:grid;place-items:center;
+  transition:background .2s,transform .2s;padding:0;
+}
+.snd:hover{background:var(--red);transform:scale(1.08)}
+.gal figure video{width:100%;height:100%;object-fit:cover;object-position:center;aspect-ratio:3/4;display:block}
+.gal figure.wide video{aspect-ratio:16/10}
+.gal figure.full video{aspect-ratio:16/9}
+.fiber video{aspect-ratio:4/3;object-fit:cover;object-position:center;width:100%;display:block}
 .board.slim{max-width:320px}
 .duo{display:grid;grid-template-columns:1fr 1fr;gap:clamp(44px,4vw,54px)}
 @media(max-width:520px){.duo{grid-template-columns:1fr;gap:56px}}
@@ -417,7 +430,7 @@ footer .fin{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-cont
     </div>
 
     <div class="split narrow-left" style="margin-top:clamp(36px,6vw,64px)">
-      <div class="board slim reveal"><div class="board-in"><img loading="lazy" decoding="async" src="assets/waterproof.gif" alt="Lit Trippy Wire being submerged in water, still glowing."></div></div>
+      <div class="board slim reveal"><div class="board-in"><video class="clip" muted loop playsinline preload="none" poster="assets/waterproof-poster.jpg" data-src="assets/waterproof.webm" data-src-fallback="assets/waterproof.mp4" aria-label="Lit Trippy Wire being submerged in water, still glowing."></video></div></div>
       <div class="reveal">
         <p class="eyebrow">Yes, that's a real dunk test</p>
         <h3 style="margin-bottom:12px">We didn't have to be careful shooting this.</h3>
@@ -461,8 +474,12 @@ footer .fin{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-cont
 
     <div class="split" style="margin-top:clamp(36px,6vw,64px)">
       <div class="duo reveal">
-        <div class="board"><div class="board-in"><img loading="lazy" decoding="async" src="assets/motion-smear.gif" alt="Trippy Wire swung through the air leaving continuous ribbons of blue and green light."></div></div>
-        <div class="board"><div class="board-in"><img loading="lazy" decoding="async" src="assets/motion-smear-2.gif" alt="Trippy Wire spun by hand, the strands smearing into solid sheets of blue and green."></div></div>
+        <div class="board"><div class="board-in clipwrap"><video class="clip" muted loop playsinline preload="none" poster="assets/smear-1-poster.jpg" data-src="assets/smear-1.mp4" data-sound="1" aria-label="Trippy Wire spun by hand, the strands smearing into solid ribbons of colour."></video>
+          <button class="snd" type="button" aria-pressed="false" aria-label="Turn sound on">🔇</button>
+        </div></div>
+        <div class="board"><div class="board-in clipwrap"><video class="clip" muted loop playsinline preload="none" poster="assets/smear-2-poster.jpg" data-src="assets/smear-2.mp4" data-sound="1" aria-label="Trippy Wire swung fast, leaving unbroken sheets of light."></video>
+          <button class="snd" type="button" aria-pressed="false" aria-label="Turn sound on">🔇</button>
+        </div></div>
       </div>
       <div class="reveal">
         <p class="eyebrow">The party trick</p>
@@ -521,7 +538,7 @@ footer .fin{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-cont
         </div>
       </div>
       <div class="fiber">
-        <img loading="lazy" decoding="async" src="assets/ribbon.gif" alt="A ribbon of Trippy Wire spun through the air at night, shifting blue to cyan.">
+        <video class="clip" muted loop playsinline preload="none" poster="assets/ribbon-poster.jpg" data-src="assets/ribbon.webm" data-src-fallback="assets/ribbon.mp4" aria-label="A ribbon of Trippy Wire spun through the air at night, shifting blue to cyan."></video>
         <div class="txt">
           <h3>Refractive</h3>
           <p>Shifts color with viewing angle and with how it's bent. Lit from both ends in two colors, one run reads differently to every person in the room. The one for handheld, worn, and moving work.</p>
@@ -608,10 +625,10 @@ footer .fin{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-cont
       <figure class="wide"><img loading="lazy" decoding="async" src="assets/g-beach.jpg" alt="A tent on a beach at sunset outlined in glowing magenta Trippy Wire."><figcaption>Beach camp · one run, no power drop</figcaption></figure>
       <figure><img loading="lazy" decoding="async" src="assets/g-wings.jpg" alt="Illuminated wings worn in a crowd, glowing blue and green."><figcaption>Wings in the crowd · blue + green</figcaption></figure>
       <figure><img loading="lazy" decoding="async" src="assets/g-garment.jpg" alt="A hooded cloak traced in blue and green Trippy Wire."><figcaption>Hooded cloak · blue + green</figcaption></figure>
-      <figure class="wide"><img loading="lazy" decoding="async" src="assets/g-pool.gif" alt="A swimming pool rimmed in glowing magenta and blue Trippy Wire at night."><figcaption>Pool rim · one run, two ends, two colors</figcaption></figure>
+      <figure class="wide"><video class="clip" muted loop playsinline preload="none" poster="assets/g-pool-poster.jpg" data-src="assets/g-pool.webm" data-src-fallback="assets/g-pool.mp4" aria-label="A swimming pool rimmed in glowing magenta and blue Trippy Wire at night."></video><figcaption>Pool rim · one run, two ends, two colors</figcaption></figure>
       <figure class="wide"><img loading="lazy" decoding="async" src="assets/g-ice.jpg" alt="Trippy Wire frozen inside a block of ice, still glowing green."><figcaption>Frozen in a block of ice · still lit</figcaption></figure>
-      <figure><img loading="lazy" decoding="async" src="assets/worn.gif" alt="A festival-goer wearing glowing Trippy Wire, moving through a crowd at dusk."><figcaption>Worn all night · festival</figcaption></figure>
-      <figure class="full"><img loading="lazy" decoding="async" src="assets/rope.gif" alt="Two people turning a glowing jump rope of Trippy Wire in a city park at night."><figcaption>Jump rope in the park · one run, two ends</figcaption></figure>
+      <figure><video class="clip" muted loop playsinline preload="none" poster="assets/worn-poster.jpg" data-src="assets/worn.webm" data-src-fallback="assets/worn.mp4" aria-label="A festival-goer wearing glowing Trippy Wire, moving through a crowd at dusk."></video><figcaption>Worn all night · festival</figcaption></figure>
+      <figure class="full"><video class="clip" muted loop playsinline preload="none" poster="assets/rope-poster.jpg" data-src="assets/rope.webm" data-src-fallback="assets/rope.mp4" aria-label="Two people turning a glowing jump rope of Trippy Wire in a city park at night."></video><figcaption>Jump rope in the park · one run, two ends</figcaption></figure>
     </div>
   </div>
 </section>
@@ -988,6 +1005,72 @@ footer .fin{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-cont
   window.addEventListener('load', repaint);
   window.addEventListener('resize', repaint);
   repaint();
+
+  /* ---- video: load and play only what's on screen ---- */
+  var clips = Array.prototype.slice.call(document.querySelectorAll('video.clip'));
+
+  // Chrome and Firefox take the smaller VP9 file; Safari falls back to H.264.
+  function attach(v){
+    if (v.getAttribute('src') || !v.dataset.src) return;
+    v.addEventListener('error', function once(){
+      var fb = v.dataset.srcFallback;
+      if (fb && v.getAttribute('src') !== fb){
+        v.setAttribute('src', fb);
+        v.load();
+        var p = v.play(); if (p && p.catch) p.catch(function(){});
+      }
+      v.removeEventListener('error', once);
+    });
+    v.setAttribute('src', v.dataset.src);
+    v.load();
+  }
+  if (clips.length){
+    if ('IntersectionObserver' in window){
+      var vio = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          var v = e.target;
+          if (e.isIntersecting){
+            attach(v);
+            var p = v.play();
+            if (p && p.catch) p.catch(function(){});
+          } else {
+            v.pause();
+            if (!v.muted) setMuted(v, true);   // never leave audio running off-screen
+          }
+        });
+      }, { rootMargin: '150px 0px', threshold: 0.15 });
+      clips.forEach(function(v){ vio.observe(v); });
+    } else {
+      clips.forEach(function(v){
+        attach(v);
+        v.play().catch(function(){});
+      });
+    }
+  }
+
+  /* ---- sound: browsers only allow it after a click, and only one at a time ---- */
+  function setMuted(v, m){
+    v.muted = m;
+    var btn = v.parentNode.querySelector('.snd');
+    if (btn){
+      btn.textContent = m ? '🔇' : '🔊';
+      btn.setAttribute('aria-pressed', String(!m));
+      btn.setAttribute('aria-label', m ? 'Turn sound on' : 'Turn sound off');
+    }
+  }
+  document.querySelectorAll('.snd').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var v = btn.parentNode.querySelector('video');
+      if (!v) return;
+      var turningOn = v.muted;
+      clips.forEach(function(other){ if (other !== v && !other.muted) setMuted(other, true); });
+      setMuted(v, !turningOn);
+      if (turningOn){
+        attach(v);
+        var p = v.play(); if (p && p.catch) p.catch(function(){});
+      }
+    });
+  });
 
   /* ---- the ears refuse to be caught ---- */
   var earsWrap = document.querySelector('.ears-wrap');

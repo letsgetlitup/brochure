@@ -49,7 +49,14 @@ Open `index.html` in any text editor.
 - **Colors and type** are CSS custom properties at the very top, under
   `:root`, `html[data-lights="off"]`, and `html[data-lights="on"]`.
 - **Images** — drop a new file in `assets/` and change the `src`. Keep photos
-  under ~1400px wide and GIFs under ~1MB or the page gets heavy fast.
+  under ~1400px wide.
+- **Video** — clips are `<video>`, not GIFs: muted, looping, and lazy-loaded, so
+  a clip only downloads once you scroll near it and pauses when it leaves the
+  screen. Each has a `-poster.jpg` shown before it loads. The two motion-smear
+  clips carry audio and have a speaker button; browsers block autoplaying sound,
+  so the visitor has to press it. Only one clip can be unmuted at a time.
+  To swap a clip, encode H.264 MP4 (and optionally VP9 WebM), drop both in
+  `assets/`, and update `data-src` / `data-src-fallback` / `poster`.
 - **The lights switch, the wire frame, the splat shapes behind images, and the
   bunny ears** are all in the `<script>` block at the bottom. The frame and the
   splats are generated at runtime and regenerate on resize, so they fit any
