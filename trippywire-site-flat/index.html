@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en" data-lights="off">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trippy Wire™ by Inner Child — Fiber-optic light for people who build experiences</title>
+<meta name="description" content="Trippy Wire™ is fiber-optic light. No current in the glowing part, no heat, IP67, and it vanishes when you switch it off.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+/* ============ tokens ============ */
+:root{
+  --red:#F31627;
+  --red-deep:#B00D1B;
+  --cyan:#35E0D6;
+  --lime:#5BFF8A;
+  --magenta:#FF3EA5;
+  --violet:#6B5BFF;
+  --amber:#FFC642;
+
+  --display:'Fredoka',ui-rounded,'Segoe UI Rounded',system-ui,sans-serif;
+  --body:'IBM Plex Sans',system-ui,-apple-system,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+
+  --wrap:1080px;
+  --gut:clamp(14px,4vw,40px);
+  --frame:clamp(26px,3.6vw,54px);
+}
+/* lights OFF (default) */
+html[data-lights="off"]{
+  --bg:#0A0910;
+  --bg-2:#12101C;
+  --ink:#FFF4F2;
+  --ink-soft:#B9B3C6;
+  --ink-faint:#7C7690;
+  --card:#17141F;
+  --card-2:#1E1A29;
+  --line:#2C2738;
+  --shadow:0 18px 50px rgba(0,0,0,.55);
+  --photo-bright:1;
+}
+/* lights ON */
+html[data-lights="on"]{
+  --bg:#FDF0EE;
+  --bg-2:#F7E4E1;
+  --ink:#1A0E10;
+  --ink-soft:#5A4348;
+  --ink-faint:#8A7276;
+  --card:#FFFFFF;
+  --card-2:#FFF7F5;
+  --line:#EBD3CF;
+  --shadow:0 16px 40px rgba(120,40,40,.13);
+  --photo-bright:.94;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:110px}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--body);font-size:17px;line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  transition:background .5s ease,color .5s ease;
+  overflow-x:hidden;
+  padding:var(--frame);
+}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{max-width:var(--wrap);margin:0 auto;padding-inline:var(--gut)}
+
+/* ============ type ============ */
+h1,h2,h3,h4{font-family:var(--display);font-weight:600;line-height:1.05;margin:0}
+h1{font-size:clamp(38px,7.2vw,76px);letter-spacing:-.02em}
+h2{font-size:clamp(28px,4.6vw,46px);letter-spacing:-.015em}
+h3{font-size:clamp(19px,2.4vw,25px)}
+p{margin:0 0 1em}
+.lede{font-size:clamp(18px,2.3vw,23px);line-height:1.5;color:var(--ink-soft)}
+.eyebrow{
+  font-family:var(--mono);font-size:12px;font-weight:600;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--red);
+  margin:0 0 10px;
+}
+.kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
+.hl{color:var(--red)}
+mark{background:linear-gradient(transparent 58%,rgba(243,22,39,.35) 58%);color:inherit;padding:0 .1em}
+
+/* ============ splat board (signature) ============ */
+.board{position:relative;isolation:isolate;margin-bottom:18px}
+.board > svg.blob{position:absolute;z-index:0;pointer-events:none;overflow:visible}
+.board > .board-in{position:relative;z-index:1;border-radius:18px;overflow:hidden;line-height:0}
+.board > .board-in > img,.board > .board-in > video{width:100%;height:auto;display:block}
+.clipwrap{position:relative}
+.snd{
+  position:absolute;right:10px;bottom:10px;z-index:3;
+  width:38px;height:38px;border-radius:50%;border:0;cursor:pointer;
+  background:rgba(10,9,16,.62);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  color:#fff;font-size:16px;line-height:1;display:grid;place-items:center;
+  transition:background .2s,transform .2s;padding:0;
+}
+.snd:hover{background:var(--red);transform:scale(1.08)}
+.gal figure video{width:100%;height:100%;object-fit:cover;object-position:center;aspect-ratio:3/4;display:block}
+.gal figure.wide video{aspect-ratio:16/10}
+.gal figure.full video{aspect-ratio:16/9}
+.fiber video{aspect-ratio:4/3;object-fit:cover;object-position:center;width:100%;display:block}
+.board.slim{max-width:320px}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:clamp(44px,4vw,54px)}
+@media(max-width:520px){.duo{grid-template-columns:1fr;gap:56px}}
+@media(max-width:780px){.board.slim{margin-inline:auto}}
+/* no-JS / pre-JS fallback */
+.board::before{
+  content:"";position:absolute;inset:-6%;border-radius:44% 56% 52% 48% / 48% 44% 56% 52%;
+  background:var(--red);z-index:0;
+}
+.board.has-blob::before{display:none}
+
+/* ============ Trippy Wire page frame ============ */
+.pageframe{position:fixed;inset:0;z-index:100;pointer-events:none}
+.pageframe svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.wire-glow{opacity:.92;transition:opacity .55s ease}
+.wire-core path{transition:stroke .55s ease,stroke-width .55s ease}
+.wire-sheen{opacity:0;transition:opacity .55s ease}
+/* lights on: the strands read as unlit fibre — clear, faintly there */
+html[data-lights="on"] .wire-glow{opacity:0}
+html[data-lights="on"] .wire-core path{
+  stroke:rgba(102,74,80,.26);
+  stroke-width:calc(var(--wire-w,2px) * 1.5);
+}
+html[data-lights="on"] .wire-sheen{opacity:.75}
+.ears-wrap{
+  position:fixed;right:clamp(26px,7vw,96px);bottom:calc(var(--frame) * 0.74);
+  width:clamp(64px,8vw,116px);z-index:99;pointer-events:none;
+  transition:transform .38s cubic-bezier(.2,.9,.25,1);will-change:transform;
+}
+.ears{
+  display:block;width:100%;
+  transform-origin:50% 100%;animation:twitch 9s ease-in-out infinite;
+}
+@keyframes twitch{
+  0%,86%,100%{transform:rotate(0deg)}
+  89%{transform:rotate(-5deg)}
+  92%{transform:rotate(4deg)}
+  95%{transform:rotate(-2deg)}
+}
+@media(prefers-reduced-motion:reduce){.ears{animation:none}.ears-wrap{transition:none}}
+
+/* ============ nav ============ */
+.nav{
+  position:sticky;top:calc(var(--frame) - 1px);z-index:60;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  background:color-mix(in srgb,var(--bg) 93%,transparent);
+  border-bottom:1px solid var(--line);
+}
+.nav-in{display:flex;align-items:center;gap:14px;padding-block:11px}
+.nav img{height:26px;width:auto;border-radius:5px}
+.nav-links{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+.nav-links a{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;
+  text-decoration:none;color:var(--ink-soft);padding:7px 11px;border-radius:999px;
+  transition:.18s;white-space:nowrap;
+}
+.nav-links a:hover{color:var(--ink);background:var(--card-2)}
+.switch{
+  display:inline-flex;align-items:center;gap:9px;border:1.5px solid var(--line);
+  background:var(--card);border-radius:999px;padding:5px 13px 5px 9px;cursor:pointer;
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-soft);transition:.2s;flex-shrink:0;
+}
+.switch:hover{border-color:var(--red);color:var(--ink)}
+.bulb{width:13px;height:13px;border-radius:50%;background:var(--ink-faint);transition:.35s}
+html[data-lights="on"] .bulb{background:var(--amber);box-shadow:0 0 0 4px rgba(255,198,66,.28),0 0 14px var(--amber)}
+@media(max-width:860px){.nav-links{display:none}}
+
+/* ============ hero ============ */
+.hero{position:relative;padding:clamp(46px,8vw,86px) 0 clamp(46px,5vw,62px);overflow:hidden}
+.hero .glow{
+  position:absolute;inset:-20% -10% auto -10%;height:70vh;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(42% 55% at 18% 30%,rgba(107,91,255,.30),transparent 70%),
+    radial-gradient(38% 50% at 78% 22%,rgba(255,62,165,.24),transparent 70%),
+    radial-gradient(45% 45% at 50% 78%,rgba(53,224,214,.16),transparent 70%);
+  filter:blur(8px);
+}
+html[data-lights="on"] .hero .glow{opacity:.42}
+.hero-in{position:relative;z-index:1}
+.hero .logo{width:min(280px,58vw);border-radius:12px;margin-bottom:26px}
+.hero h1{max-width:15ch}
+.hero .lede{max-width:52ch;margin-top:20px}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.btn{
+  display:inline-block;font-family:var(--display);font-weight:600;font-size:16px;
+  padding:13px 24px;border-radius:999px;text-decoration:none;transition:.2s;border:2px solid transparent;
+}
+.btn-1{background:var(--red);color:#fff}
+.btn-1:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(243,22,39,.4)}
+.btn-2{border-color:var(--line);color:var(--ink)}
+.btn-2:hover{border-color:var(--red);color:var(--red)}
+.hero-shot{margin-top:clamp(38px,6vw,62px)}
+.cap{font-family:var(--mono);font-size:12px;color:var(--ink-faint);margin-top:58px;line-height:1.5;display:block}
+
+/* ============ sections ============ */
+section{padding:clamp(52px,8vw,92px) 0}
+.sec-head{max-width:60ch;margin-bottom:clamp(28px,4vw,44px)}
+.sec-head p{color:var(--ink-soft);margin-top:14px;margin-bottom:0}
+.tint{background:var(--bg-2)}
+
+/* ============ feature cards ============ */
+.feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
+.feat{
+  background:var(--card);border:1.5px solid var(--line);border-radius:22px;
+  padding:24px 22px;transition:.25s;position:relative;overflow:hidden;
+}
+.feat:hover{transform:translateY(-4px);border-color:var(--red);box-shadow:var(--shadow)}
+.feat .ico{font-size:30px;line-height:1;margin-bottom:12px;display:block}
+.feat h3{margin-bottom:7px}
+.feat p{font-size:15px;color:var(--ink-soft);margin:0;line-height:1.55}
+
+/* ============ split ============ */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(48px,4vw,58px);align-items:center}
+.split.narrow-left{grid-template-columns:.72fr 1fr}
+.split.narrow-right{grid-template-columns:1fr .72fr}
+@media(max-width:780px){.split,.split.narrow-left,.split.narrow-right{grid-template-columns:1fr}}
+
+/* ============ table ============ */
+.tablewrap{position:relative;overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:20px;border:1.5px solid var(--line);background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:15px}
+th,td{padding:13px 16px;text-align:left;border-bottom:1px solid var(--line)}
+thead th{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-faint);background:var(--card-2);position:sticky;top:0;
+}
+thead th:nth-child(2){color:var(--red)}
+tbody th{font-weight:600;font-size:15px}
+td:nth-child(2){color:var(--red);font-weight:600}
+tbody tr:last-child th,tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--card-2)}
+
+/* ============ color showcase ============ */
+.shots{display:grid;grid-template-columns:1fr 1fr;gap:clamp(48px,4vw,58px)}
+@media(max-width:760px){.shots{grid-template-columns:1fr}}
+
+/* ============ fiber cards ============ */
+.fibers{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.fiber{background:var(--card);border:1.5px solid var(--line);border-radius:22px;overflow:hidden;display:flex;flex-direction:column}
+.fiber .ph{
+  aspect-ratio:4/3;background:var(--card-2);display:grid;place-items:center;
+  font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);
+  border-bottom:1.5px solid var(--line);text-align:center;padding:14px;
+}
+.fiber img{aspect-ratio:4/3;object-fit:cover;object-position:center;width:100%}
+.fiber .txt{padding:20px 22px 24px}
+.fiber h3{margin-bottom:8px}
+.fiber p{font-size:15px;color:var(--ink-soft);margin:0;line-height:1.55}
+.tag{
+  display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  background:var(--red);color:#fff;padding:4px 10px;border-radius:999px;margin-bottom:10px;
+}
+
+/* ============ spec list ============ */
+.specs{border-top:1.5px solid var(--line)}
+.spec{display:grid;grid-template-columns:190px 1fr;gap:16px;padding:13px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.spec dt{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint)}
+.spec dd{margin:0;font-size:16px}
+@media(max-width:600px){.spec{grid-template-columns:1fr;gap:2px}}
+
+/* ============ gallery ============ */
+.gal{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+.gal figure{margin:0;grid-column:span 4;border-radius:18px;overflow:hidden;border:1.5px solid var(--line);background:var(--card);position:relative}
+.gal figure img{width:100%;height:100%;object-fit:cover;object-position:center;aspect-ratio:3/4}
+.gal figure.wide{grid-column:span 8}
+.gal figure.full{grid-column:span 12}
+.gal figure.full img{aspect-ratio:16/9}
+.gal figure.wide img{aspect-ratio:16/10}
+.gal figcaption{
+  position:absolute;left:0;right:0;bottom:0;padding:22px 16px 12px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#fff;
+  background:linear-gradient(transparent,rgba(0,0,0,.78));
+}
+@media(max-width:860px){.gal figure,.gal figure.wide{grid-column:span 6}}
+@media(max-width:520px){.gal figure,.gal figure.wide{grid-column:span 12}}
+
+/* ============ details / accordion ============ */
+.acc{border-top:1.5px solid var(--line)}
+details{border-bottom:1.5px solid var(--line)}
+summary{
+  cursor:pointer;list-style:none;padding:17px 44px 17px 0;position:relative;
+  font-family:var(--display);font-weight:500;font-size:clamp(17px,2vw,20px);
+  transition:color .18s;
+}
+summary::-webkit-details-marker{display:none}
+summary:hover{color:var(--red)}
+summary::after{
+  content:"";position:absolute;right:10px;top:50%;width:11px;height:11px;
+  border-right:2.5px solid var(--red);border-bottom:2.5px solid var(--red);
+  transform:translateY(-70%) rotate(45deg);transition:transform .25s;
+}
+details[open] summary::after{transform:translateY(-30%) rotate(-135deg)}
+details .in{padding:0 0 22px;color:var(--ink-soft);font-size:16px;max-width:75ch}
+details .in p:last-child{margin-bottom:0}
+details .in ul{margin:0 0 1em;padding-left:20px}
+details .in li{margin-bottom:5px}
+.emoji{font-size:1.05em;margin-right:8px}
+
+/* fit grid inside details */
+.fitlist{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px 22px;padding:0;margin:0;list-style:none}
+.fitlist li{
+  font-size:15.5px;padding-left:20px;position:relative;color:var(--ink-soft);margin-bottom:4px;
+}
+.fitlist li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:50%;background:var(--red)}
+
+/* ============ callout ============ */
+.callout{
+  background:var(--card);border:1.5px solid var(--line);border-left:5px solid var(--red);
+  border-radius:0 18px 18px 0;padding:20px 24px;font-size:16px;color:var(--ink-soft);
+}
+.callout strong{color:var(--ink)}
+
+/* ============ cta ============ */
+.cta{text-align:center;padding-block:clamp(60px,9vw,110px)}
+.cta h2{max-width:16ch;margin-inline:auto}
+.cta .lede{max-width:46ch;margin:18px auto 0}
+.contact{
+  display:flex;gap:10px 34px;flex-wrap:wrap;justify-content:center;margin-top:30px;
+  font-family:var(--mono);font-size:14px;
+}
+.contact a{color:var(--red);text-decoration:none;border-bottom:1.5px solid transparent}
+.contact a:hover{border-bottom-color:var(--red)}
+
+footer{border-top:1.5px solid var(--line);padding:26px 0 40px;font-family:var(--mono);font-size:11.5px;color:var(--ink-faint)}
+footer .fin{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+
+/* ============ motion ============ */
+.reveal{opacity:0;transform:translateY(22px)}
+.reveal.in{opacity:1;transform:none;transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition-duration:.01ms!important}
+  .reveal{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+:focus-visible{outline:3px solid var(--cyan);outline-offset:3px;border-radius:6px}
+</style>
+</head>
+<body>
+
+<div class="pageframe" aria-hidden="true">
+  <svg class="wireframe" preserveAspectRatio="none">
+    <defs>
+      <filter id="wireBloom" x="-12%" y="-12%" width="124%" height="124%">
+        <feGaussianBlur stdDeviation="5" result="b1"/>
+        <feGaussianBlur in="SourceGraphic" stdDeviation="14" result="b2"/>
+        <feMerge><feMergeNode in="b2"/><feMergeNode in="b1"/><feMergeNode in="b1"/></feMerge>
+      </filter>
+    </defs>
+    <g class="wire-glow" filter="url(#wireBloom)"></g>
+    <g class="wire-core"></g>
+    <g class="wire-sheen"></g>
+  </svg>
+</div>
+<span class="ears-wrap" aria-hidden="true"><img class="ears" src="ears.png" alt=""></span>
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="wrap nav-in">
+    <img src="logo.png" alt="Inner Child">
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#different">Different</a>
+      <a href="#colors">Colors</a>
+      <a href="#fiber">Trippy Wire</a>
+      <a href="#kit">The kit</a>
+      <a href="#wild">In the wild</a>
+      <a href="#fit">Where it fits</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <button class="switch" id="lights" aria-pressed="false">
+      <span class="bulb" aria-hidden="true"></span><span id="lightsLabel">Lights on</span>
+    </button>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="glow" aria-hidden="true"></div>
+  <div class="wrap hero-in">
+    <img class="logo" src="logo.png" alt="Inner Child">
+    <p class="eyebrow">Made in Detroit &nbsp;·&nbsp; Hello 👋</p>
+    <h1>Light you can swim&nbsp;with, wear, and cut with&nbsp;scissors.</h1>
+    <p class="lede">Trippy Wire™ is fiber-optic light. The glowing part carries no electricity and makes no heat — so it goes in water, on people, and around corners that LED tape gives up on. Then it vanishes completely when you switch it off.</p>
+    <div class="hero-cta">
+      <a class="btn btn-1" href="#demo">Book a demo</a>
+      <a class="btn btn-2" href="#different">See what makes it weird</a>
+    </div>
+
+    <div class="hero-shot board reveal">
+      <div class="board-in"><img fetchpriority="high" decoding="async" src="hero-tent.jpg" alt="A tent on a beach at sunset outlined in glowing magenta Trippy Wire."></div>
+    </div>
+    <p class="cap">Two illuminators, one run of Trippy Wire, no power drop. Second Beach, Olympic National Park.</p>
+  </div>
+</header>
+
+
+<!-- ============ FEATURES ============ -->
+<section id="features" class="tint">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">⭐ Features across all kits</p>
+      <h2>Four things that are true of every&nbsp;kit.</h2>
+    </div>
+
+    <div class="feats reveal">
+      <div class="feat">
+        <span class="ico">💧</span>
+        <h3>Actually waterproof</h3>
+        <p>IP67 rated, top to bottom. Housing, battery, Trippy Wire. Rain, splash zones, and full submersion.</p>
+      </div>
+      <div class="feat">
+        <span class="ico">🛡️</span>
+        <h3>Zero shock risk</h3>
+        <p>Trippy Wire is glass and polymer. No current, no heat. Touch it, wrap it around someone, cut it with scissors while it's running.</p>
+      </div>
+      <div class="feat">
+        <span class="ico">🔌</span>
+        <h3>Plug and play</h3>
+        <p>No special tools, no drivers to spec, no power drop. Everything you need to light something up is in the box.</p>
+      </div>
+      <div class="feat">
+        <span class="ico">🎭</span>
+        <h3>1&nbsp;mm and invisible</h3>
+        <p>Clear and unnoticeable when off. A saturated, continuous stroke of color when on.</p>
+      </div>
+    </div>
+
+    <div class="split narrow-left" style="margin-top:clamp(36px,6vw,64px)">
+      <div class="board slim reveal"><div class="board-in"><video class="clip" muted loop playsinline preload="none" poster="waterproof-poster.jpg" data-src="waterproof.webm" data-src-fallback="waterproof.mp4" aria-label="Lit Trippy Wire being submerged in water, still glowing."></video></div></div>
+      <div class="reveal">
+        <p class="eyebrow">Yes, that's a real dunk test</p>
+        <h3 style="margin-bottom:12px">We didn't have to be careful shooting this.</h3>
+        <p style="color:var(--ink-soft)">This is the whole pitch in one clip. The illuminator is sealed and submersible. Trippy Wire doesn't care about water at all, because there's nothing electrical in it to care.</p>
+        <p style="color:var(--ink-soft);margin-bottom:0">For long-term installs we still recommend keeping the illuminator somewhere dry and letting the Trippy Wire do the swimming — but that's a maintenance preference, not a safety one.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ DIFFERENT ============ -->
+<section id="different">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">😎 What makes us different</p>
+      <h2>Not a replacement for LED tape. The right tool where tape is the wrong&nbsp;one.</h2>
+      <p>We're not going to out-lumen an LED. What we do instead is go places tape can't, and do a thing in motion that point-source light physically cannot reproduce.</p>
+    </div>
+
+    <div class="tablewrap reveal">
+      <table>
+        <thead>
+          <tr><th scope="col">Feature</th><th scope="col">Trippy Wire™</th><th scope="col">LED tape</th><th scope="col">Neon (glass)</th><th scope="col">EL wire</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Brightness</th><td>Moderate</td><td>High</td><td>Moderate</td><td>Low</td></tr>
+          <tr><th scope="row">Flexibility / bend radius</th><td>Excellent</td><td>Good</td><td>Poor</td><td>Good</td></tr>
+          <tr><th scope="row">Profile</th><td>1 mm</td><td>8–12 mm</td><td>15 mm +</td><td>2–5 mm</td></tr>
+          <tr><th scope="row">IP67 submersible</th><td>Yes</td><td>Conditional</td><td>No</td><td>No</td></tr>
+          <tr><th scope="row">Safe to touch or cut live</th><td>Yes</td><td>No</td><td>No</td><td>No</td></tr>
+          <tr><th scope="row">Heat at the light line</th><td>None</td><td>Yes</td><td>Yes</td><td>Low</td></tr>
+          <tr><th scope="row">Energy draw</th><td>Very low</td><td>Low</td><td>High</td><td>Low</td></tr>
+          <tr><th scope="row">Durability</th><td>Excellent</td><td>Good</td><td>Poor</td><td>Fair</td></tr>
+          <tr><th scope="row">Maintenance cost</th><td>Low</td><td>Moderate</td><td>High</td><td>Moderate</td></tr>
+          <tr><th scope="row">Invisible when off</th><td>Yes</td><td>No</td><td>No</td><td>Partial</td></tr>
+          <tr><th scope="row">Motion smear</th><td>Yes</td><td>No</td><td>No</td><td>No</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="split" style="margin-top:clamp(36px,6vw,64px)">
+      <div class="duo reveal">
+        <div class="board"><div class="board-in clipwrap"><video class="clip" muted loop playsinline preload="none" poster="smear-1-poster.jpg" data-src="smear-1.mp4" data-sound="1" aria-label="Trippy Wire spun by hand, the strands smearing into solid ribbons of colour."></video>
+          <button class="snd" type="button" aria-pressed="false" aria-label="Turn sound on">🔇</button>
+        </div></div>
+        <div class="board"><div class="board-in clipwrap"><video class="clip" muted loop playsinline preload="none" poster="smear-2-poster.jpg" data-src="smear-2.mp4" data-sound="1" aria-label="Trippy Wire swung fast, leaving unbroken sheets of light."></video>
+          <button class="snd" type="button" aria-pressed="false" aria-label="Turn sound on">🔇</button>
+        </div></div>
+      </div>
+      <div class="reveal">
+        <p class="eyebrow">The party trick</p>
+        <h3 style="margin-bottom:12px">Motion smear</h3>
+        <p style="color:var(--ink-soft)">Move an LED strip fast and you get a dotted line, because it's a row of points. Move a lit run of Trippy Wire and you get an unbroken ribbon, because the whole length is emitting at once.</p>
+        <p style="color:var(--ink-soft)"><strong style="color:var(--ink)">This is not a camera effect.</strong> What you see in the clip is what your eye sees standing there. It's the reason the product reads so well on performers, props, and anything handheld.</p>
+        <p style="color:var(--ink-soft);margin-bottom:0">It also means guests film it. Every single time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ COLORS ============ -->
+<section id="colors" class="tint">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">🎨 Colors</p>
+      <h2>Three illuminators. Six colors if you're&nbsp;clever.</h2>
+      <p>Red, green, and blue — one color per illuminator. Light one end of a run and you get that color. Put a second illuminator on the <em>other</em> end in a different color and the Trippy Wire mixes the two along its length. No extra hardware, no controller, just optics doing what optics do.</p>
+    </div>
+
+    <div class="shots">
+      <figure style="margin:0" class="reveal">
+        <div class="board"><div class="board-in"><img loading="lazy" decoding="async" src="single-colors.jpg" alt="Red, blue, and green Trippy Wire loops photographed with room lights on and off."></div></div>
+        <figcaption class="cap">Single colors, lights on vs. lights off. Refractive Trippy Wire.</figcaption>
+      </figure>
+      <figure style="margin:0" class="reveal">
+        <div class="board"><div class="board-in"><img loading="lazy" decoding="async" src="color-mixing.jpg" alt="Yellow, magenta, and cyan produced by lighting a single run from both ends in two colors."></div></div>
+        <figcaption class="cap">Two-color mixing: red+green, red+blue, blue+green. Refractive Trippy Wire.</figcaption>
+      </figure>
+    </div>
+
+    <div class="callout reveal" style="margin-top:clamp(28px,4vw,44px)">
+      <strong>Worth noticing in the left column.</strong> Those are the same runs with the room lights on. It stays legible in a lit space — and completely disappears when you power it down, which is part of the magic in this tech.
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ FIBER ============ -->
+<section id="fiber">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">🧵 Trippy Wire™</p>
+      <h2>Three grades. All 1&nbsp;mm, all cuttable on&nbsp;site.</h2>
+      <p>Every grade is 1 mm PMMA side-glow, non-conductive, and user-replaceable — so a damaged run is a two-minute swap rather than a fixture replacement. Pick the grade by what the light has to do.</p>
+    </div>
+
+    <div class="fibers reveal">
+      <div class="fiber">
+        <img loading="lazy" decoding="async" src="fiber-diffusive.jpg" alt="A swimming pool rimmed with diffusive Trippy Wire, magenta on one side and blue on the other.">
+        <div class="txt">
+          <h3>Diffusive</h3>
+          <p>Even gradient when lit from both ends, and brighter than refractive. The one for static installs and long runs — this pool is a single run, magenta at one end, blue at the other.</p>
+        </div>
+      </div>
+      <div class="fiber">
+        <video class="clip" muted loop playsinline preload="none" poster="ribbon-poster.jpg" data-src="ribbon.webm" data-src-fallback="ribbon.mp4" aria-label="A ribbon of Trippy Wire spun through the air at night, shifting blue to cyan."></video>
+        <div class="txt">
+          <h3>Refractive</h3>
+          <p>Shifts color with viewing angle and with how it's bent. Lit from both ends in two colors, one run reads differently to every person in the room. The one for handheld, worn, and moving work.</p>
+        </div>
+      </div>
+      <div class="fiber">
+        <img loading="lazy" decoding="async" src="premium-three.jpg" alt="Three illuminator units running red, green, and blue premium Trippy Wire on a tile floor.">
+        <div class="txt">
+          <span class="tag">Brightest</span>
+          <h3>Premium</h3>
+          <p>The brightest Trippy Wire we offer, with an even gradient from both ends and the strongest motion smear. Shown here on three units — one per color.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ KIT ============ -->
+<section id="kit" class="tint">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">📦 The kit</p>
+      <h2>An illuminator, a run of Trippy Wire, and nothing&nbsp;else.</h2>
+      <p>Power, driver, and light source all live inside one sealed aluminum box roughly the footprint of a soda can. A deployment needs one mounting point and no cable run.</p>
+    </div>
+
+    <div class="split" style="margin-bottom:clamp(34px,5vw,56px)">
+      <div class="board reveal"><div class="board-in"><img loading="lazy" decoding="async" src="unit-lit.jpg" alt="An illuminator running Trippy Wire, photographed at night."></div></div>
+      <div class="board reveal"><div class="board-in"><img loading="lazy" decoding="async" src="unit-water.jpg" alt="The illuminator housing beaded with water."></div></div>
+    </div>
+
+    <div class="split narrow-right">
+      <div class="reveal">
+        <h3 style="margin-bottom:6px">Standard unit</h3>
+        <dl class="specs">
+          <div class="spec"><dt>Run length</dt><dd>Up to 30 m (~100 ft) of Trippy Wire per unit</dd></div>
+          <div class="spec"><dt>Color</dt><dd>One color per unit. Mix by lighting one run from both ends with two units</dd></div>
+          <div class="spec"><dt>Battery</dt><dd>2 × 3,500 mAh Li-ion, USB-C rechargeable</dd></div>
+          <div class="spec"><dt>Housing</dt><dd>CNC aluminum, flanged mounting feet, IP67</dd></div>
+          <div class="spec"><dt>Service life</dt><dd>~10,000 operating hours</dd></div>
+          <div class="spec"><dt>Control</dt><dd>On-unit brightness and mode. Wireless in development</dd></div>
+          <div class="spec"><dt>Programming</dt><dd>Fully programmable — modes and behavior can be written for any use case</dd></div>
+        </dl>
+
+        <h3 style="margin:30px 0 6px">High-capacity / custom</h3>
+        <dl class="specs">
+          <div class="spec"><dt>Run length</dt><dd>Beyond 30 m of Trippy Wire on a single unit</dd></div>
+          <div class="spec"><dt>Battery</dt><dd>Your choice of battery size — specified to the job</dd></div>
+          <div class="spec"><dt>Programming</dt><dd>Fully programmable, same as standard</dd></div>
+        </dl>
+
+        <h3 style="margin:30px 0 6px">Runtime by color</h3>
+        <div class="tablewrap">
+          <table style="min-width:0">
+            <thead><tr><th scope="col">Illuminator</th><th scope="col">Wavelength</th><th scope="col">Runtime</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Blue</th><td>450 nm</td><td style="color:var(--ink);font-weight:400">~40 hours</td></tr>
+              <tr><th scope="row">Red</th><td>635 nm</td><td style="color:var(--ink);font-weight:400">~19 hours</td></tr>
+              <tr><th scope="row">Green</th><td>520 nm</td><td style="color:var(--ink);font-weight:400">~9 hours</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="cap">Our favorite pairings: red + blue, and green + blue.</p>
+      </div>
+
+      <div class="reveal">
+        <div class="board"><div class="board-in"><img loading="lazy" decoding="async" src="unit-scale.jpg" alt="The illuminator next to a 12 oz can for scale."></div></div>
+        <p class="cap">Size of a can. Hides behind a set piece, inside a prop, under a rail, or in a performer's pack.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ IN THE WILD ============ -->
+<section id="wild">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">🌙 In the wild</p>
+      <h2>Where it's already&nbsp;been.</h2>
+    </div>
+    <div class="gal reveal">
+      <figure class="wide"><img loading="lazy" decoding="async" src="g-beach.jpg" alt="A tent on a beach at sunset outlined in glowing magenta Trippy Wire."><figcaption>Beach camp · one run, no power drop</figcaption></figure>
+      <figure><img loading="lazy" decoding="async" src="g-wings.jpg" alt="Illuminated wings worn in a crowd, glowing blue and green."><figcaption>Wings in the crowd · blue + green</figcaption></figure>
+      <figure><img loading="lazy" decoding="async" src="g-garment.jpg" alt="A hooded cloak traced in blue and green Trippy Wire."><figcaption>Hooded cloak · blue + green</figcaption></figure>
+      <figure class="wide"><video class="clip" muted loop playsinline preload="none" poster="g-pool-poster.jpg" data-src="g-pool.webm" data-src-fallback="g-pool.mp4" aria-label="A swimming pool rimmed in glowing magenta and blue Trippy Wire at night."></video><figcaption>Pool rim · one run, two ends, two colors</figcaption></figure>
+      <figure class="wide"><img loading="lazy" decoding="async" src="g-ice.jpg" alt="Trippy Wire frozen inside a block of ice, still glowing green."><figcaption>Frozen in a block of ice · still lit</figcaption></figure>
+      <figure><video class="clip" muted loop playsinline preload="none" poster="worn-poster.jpg" data-src="worn.webm" data-src-fallback="worn.mp4" aria-label="A festival-goer wearing glowing Trippy Wire, moving through a crowd at dusk."></video><figcaption>Worn all night · festival</figcaption></figure>
+      <figure class="full"><video class="clip" muted loop playsinline preload="none" poster="rope-poster.jpg" data-src="rope.webm" data-src-fallback="rope.mp4" aria-label="Two people turning a glowing jump rope of Trippy Wire in a city park at night."></video><figcaption>Jump rope in the park · one run, two ends</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ WHERE IT FITS ============ -->
+<section id="fit" class="tint">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">🔮 Where it fits your work</p>
+      <h2>Honestly? Anywhere it's dark enough to&nbsp;see&nbsp;it.</h2>
+      <p>The use cases don't really end — every time we show this to someone new they think of one we hadn't. These are just the jobs we get asked about most. Open whichever is closest to yours.</p>
+    </div>
+
+    <div class="acc reveal">
+      <details>
+        <summary><span class="emoji">🏟️</span>Stadiums &amp; arenas</summary>
+        <div class="in"><ul class="fitlist">
+          <li>Player tunnel and entrance reveals</li>
+          <li>Rail, stair, and edge accent at scale</li>
+          <li>Fan-engagement wearables and giveaways</li>
+          <li>Wet and washdown zones</li>
+          <li>Concourse wayfinding</li>
+        </ul></div>
+      </details>
+      <details>
+        <summary><span class="emoji">🎪</span>Brand activations &amp; experiential</summary>
+        <div class="in"><ul class="fitlist">
+          <li>Handheld and worn elements for talent</li>
+          <li>Photo moments with true motion trails</li>
+          <li>Mobile tours with no power drop</li>
+          <li>Outdoor and all-weather footprints</li>
+          <li>Festivals, fairs, and amusement parks</li>
+        </ul></div>
+      </details>
+      <details>
+        <summary><span class="emoji">🧰</span>Trade shows &amp; exhibits</summary>
+        <div class="in"><ul class="fitlist">
+          <li>Booth edge and structure outlining</li>
+          <li>Product highlighting at 1 mm profile</li>
+          <li>Invisible-when-off daytime installs</li>
+          <li>Fast strike, no fixture inventory</li>
+        </ul></div>
+      </details>
+      <details>
+        <summary><span class="emoji">🎭</span>Live production &amp; theater</summary>
+        <div class="in"><ul class="fitlist">
+          <li>Costume, prop, and puppet illumination</li>
+          <li>Set-piece and scenic accent</li>
+          <li>Rigging-free runs in tight geometry</li>
+          <li>Silent, heat-free, dimmable presence</li>
+          <li>Stage edge and pit marking</li>
+        </ul></div>
+      </details>
+      <details>
+        <summary><span class="emoji">🏛️</span>Permanent installation</summary>
+        <div class="in"><ul class="fitlist">
+          <li>Architectural accent and wayfinding</li>
+          <li>Pools, hot tubs, fountains, docks</li>
+          <li>Aquariums, saunas, and wet rooms</li>
+          <li>Art installations and sculpture</li>
+          <li>Bars, clubs, and restaurants</li>
+        </ul></div>
+      </details>
+      <details>
+        <summary><span class="emoji">🛍️</span>Corporate &amp; retail</summary>
+        <div class="in"><ul class="fitlist">
+          <li>Lobby and reception feature lighting</li>
+          <li>Display and shelving accent</li>
+          <li>Low-maintenance long-life runs</li>
+          <li>Safety and egress marking</li>
+          <li>Night visibility — vests, barriers, crews</li>
+        </ul></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ FAQ ============ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">❓ Questions we actually get</p>
+      <h2>Including the two your safety lead is about to&nbsp;ask.</h2>
+    </div>
+
+    <div class="acc reveal">
+      <details open>
+        <summary>Is it safe?</summary>
+        <div class="in">
+          <p>At the light line, yes — unusually so. Trippy Wire carries no current and produces no heat. It can be handled, submerged, wrapped around a person, or cut with scissors while the system is running. Where a production would normally need a power drop, a driver, and a hazard assessment, this needs a mounting point.</p>
+          <p>Ordinary product sense still applies: keep it away from children under six, and use it for what it's for.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Your illuminators use lasers. Is that a problem?</summary>
+        <div class="in">
+          <p>Short answer: no, and here's exactly why, because this is the question that decides whether a project moves.</p>
+          <p>The light source inside the housing is a laser diode. It is fully enclosed in a sealed metal housing behind isolation glass, and light exits only through the threaded output port. <strong>There is no accessible beam at any point in normal operation.</strong> Trippy Wire emits diffuse light along its length — it is not a directed beam and cannot be pointed at anyone.</p>
+          <p>The distinction that matters legally, and at nearly every venue, is between an enclosed source and a laser <em>pointer</em>. This is the former, in the same sense that a laser printer is. Most venues, festivals, and municipalities permit it with no special filing.</p>
+          <p>One honest exception: a small number of promoters — Insomniac events among them — apply a blanket prohibition on any laser-based product regardless of enclosure. We flag it up front so it gets checked during scoping instead of discovered on load-in.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Is it visible in daylight?</summary>
+        <div class="in"><p>Not in direct sun. It's an accent light for low-to-no ambient light. It holds up well in a normally lit interior — that's the left column of the color photos above — but it isn't a daytime signage product.</p></div>
+      </details>
+
+      <details>
+        <summary>Can I put it in a pool, a fountain, or on a dock?</summary>
+        <div class="in"><p>Trippy Wire, absolutely — it's completely happy underwater indefinitely. The illuminator housing and battery are submersible too, but for a permanent install we'd rather see the illuminator somewhere dry and only the Trippy Wire in the water. That's about long-term serviceability, not safety.</p></div>
+      </details>
+
+      <details>
+        <summary>Do the illuminators do RGB or dimming?</summary>
+        <div class="in"><p>Brightness levels and modes are on the unit today. Full RGB mixing in a single channel and wireless control are in development. If a project needs it on a specific timeline, tell us — that conversation changes our roadmap.</p></div>
+      </details>
+
+      <details>
+        <summary>How long does it last?</summary>
+        <div class="in"><p>Roughly 10,000 operating hours. Trippy Wire is the consumable, and it's user-replaceable and cuttable on site, so a damaged run is a swap rather than a repair.</p></div>
+      </details>
+
+      <details>
+        <summary>Can you customize?</summary>
+        <div class="in"><p>Yes, and it's most of what we do. Housing form factor, mounting, run length, battery capacity, and color pairings are all open. Tell us the constraint — waterproof, tiny, worn, 12-hour runtime — and we'll build to it.</p></div>
+      </details>
+
+      <details>
+        <summary>Can we see it in person?</summary>
+        <div class="in"><p>Please. It genuinely does not photograph the way it looks, and the motion behavior has to be seen moving in a room. We're in Detroit, and anywhere in southeast Michigan is a same-day trip rather than a shipped box.</p></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ CTA ============ -->
+<section id="demo" class="cta tint">
+  <div class="wrap">
+    <p class="eyebrow reveal">Next step</p>
+    <h2 class="reveal">Give us thirty minutes and a dark&nbsp;room.</h2>
+    <p class="lede reveal">We'll bring a working unit to you and run it in your space. Bring production, bring safety, bring the designer who'll have to draw it — the objections are easier to answer with the thing switched on.</p>
+    <div class="contact reveal">
+      <span><strong>Mark Harburg</strong> — Founder &amp; CEO</span>
+      <a href="mailto:mark@innerchildstyles.com">mark@innerchildstyles.com</a>
+      <a href="tel:+17349298052">734-929-8052</a>
+      <a href="https://www.instagram.com/letsgetlitup/" target="_blank" rel="noopener">@letsgetlitup</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap fin">
+    <span>© 2026 Inner Child Apparel LLC · Detroit, Michigan</span>
+    <span>Trippy Wire™ · RoHS compliant · CE marked with declaration</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- lights switch ---- */
+  var btn = document.getElementById('lights');
+  var label = document.getElementById('lightsLabel');
+  btn.addEventListener('click', function(){
+    var on = document.documentElement.getAttribute('data-lights') === 'on';
+    document.documentElement.setAttribute('data-lights', on ? 'off' : 'on');
+    btn.setAttribute('aria-pressed', String(!on));
+    label.textContent = on ? 'Lights on' : 'Lights off';
+  });
+
+  /* ---- splat blobs behind every image (the signature) ---- */
+  var NS = 'http://www.w3.org/2000/svg';
+
+  // A splat is the image's own rounded rectangle, pushed outward by a base
+  // margin and then wobbled. That keeps the picture safely inside no matter
+  // the aspect ratio, while the edge stays loose and hand-drawn.
+  function splat(w, h, m, amp, seed){
+    var R = m + 18, W = w + 2 * m, H = h + 2 * m;   // 18 == the image corner radius
+    var segs = [
+      { t:'l', x0:R,     y0:0,     x1:W - R, y1:0,     nx:0,  ny:-1 },
+      { t:'a', cx:W - R, cy:R,     a0:-90,   a1:0 },
+      { t:'l', x0:W,     y0:R,     x1:W,     y1:H - R, nx:1,  ny:0 },
+      { t:'a', cx:W - R, cy:H - R, a0:0,     a1:90 },
+      { t:'l', x0:W - R, y0:H,     x1:R,     y1:H,     nx:0,  ny:1 },
+      { t:'a', cx:R,     cy:H - R, a0:90,    a1:180 },
+      { t:'l', x0:0,     y0:H - R, x1:0,     y1:R,     nx:-1, ny:0 },
+      { t:'a', cx:R,     cy:R,     a0:180,   a1:270 }
+    ];
+    var lens = segs.map(function(sg){
+      return sg.t === 'l'
+        ? Math.hypot(sg.x1 - sg.x0, sg.y1 - sg.y0)
+        : Math.PI * R / 2;
+    });
+    var total = lens.reduce(function(a, b){ return a + b; }, 0);
+    var p1 = seed * 1.7, p2 = seed * 2.3 + 0.9, p3 = seed * 3.1 + 2.2;
+    var d = '', run = 0;
+
+    segs.forEach(function(sg, i){
+      var n = Math.max(6, Math.round(lens[i] / 5));
+      for (var j = 0; j <= n; j++){
+        var f = j / n;
+        var t = (run + f * lens[i]) / total;               // 0..1 around the perimeter
+        var wob = amp * (
+            0.44 * (1 + Math.sin(2 * Math.PI * 3 * t + p1)) / 2
+          + 0.34 * (1 + Math.sin(2 * Math.PI * 5 * t + p2)) / 2
+          + 0.22 * (1 + Math.sin(2 * Math.PI * 2 * t + p3)) / 2
+        );
+        var x, y;
+        if (sg.t === 'l'){
+          x = sg.x0 + (sg.x1 - sg.x0) * f + sg.nx * wob;
+          y = sg.y0 + (sg.y1 - sg.y0) * f + sg.ny * wob;
+        } else {
+          var a = (sg.a0 + (sg.a1 - sg.a0) * f) * Math.PI / 180;
+          x = sg.cx + (R + wob) * Math.cos(a);
+          y = sg.cy + (R + wob) * Math.sin(a);
+        }
+        d += (d ? ' L ' : 'M ') + (x + amp).toFixed(1) + ' ' + (y + amp).toFixed(1);
+      }
+      run += lens[i];
+    });
+    return { d: d + ' Z', W: W + 2 * amp, H: H + 2 * amp, pad: m + amp };
+  }
+
+  var boards = Array.prototype.slice.call(document.querySelectorAll('.board'));
+  boards.forEach(function(b, i){ b.dataset.seed = i + 1; });
+
+  function paint(board){
+    if (!board) return;
+    var inner = board.querySelector('.board-in');
+    if (!inner) return;
+    var w = inner.offsetWidth, h = inner.offsetHeight;
+    if (!w || !h) return;
+    var svg = board.querySelector('svg.blob');
+    if (!svg){
+      svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('class', 'blob');
+      svg.setAttribute('aria-hidden', 'true');
+      svg.appendChild(document.createElementNS(NS, 'path'));
+      svg.firstChild.setAttribute('fill', 'var(--red)');
+      board.insertBefore(svg, board.firstChild);
+      board.classList.add('has-blob');
+    }
+    var m = Math.max(10, Math.min(22, Math.min(w, h) * 0.045));
+    var sp = splat(w, h, m, m * 1.7, Number(board.dataset.seed));
+    svg.setAttribute('viewBox', '0 0 ' + sp.W.toFixed(0) + ' ' + sp.H.toFixed(0));
+    svg.setAttribute('width', sp.W.toFixed(0));
+    svg.setAttribute('height', sp.H.toFixed(0));
+    svg.style.left = (-sp.pad).toFixed(0) + 'px';
+    svg.style.top  = (-sp.pad).toFixed(0) + 'px';
+    svg.firstChild.setAttribute('d', sp.d);
+  }
+  function paintAll(){ boards.forEach(paint); }
+
+  if ('ResizeObserver' in window){
+    var ro = new ResizeObserver(function(entries){
+      entries.forEach(function(e){ paint(e.target.closest('.board')); });
+    });
+    boards.forEach(function(b){ var i = b.querySelector('.board-in'); if (i) ro.observe(i); });
+  }
+
+  /* ---- wavy frame around the whole page ---- */
+  // Splotchy edge: four non-harmonic waves stacked so the pattern never
+  // visibly repeats, then curved so the lobes bulge and the gaps stay lean.
+  /* ---- the page is framed by three runs of Trippy Wire ---- */
+  var STRANDS = [
+    { color: '#FF2233', phase: 0.00, amp: 1.00 },   // red
+    { color: '#34FF7B', phase: 1.05, amp: 0.82 },   // green
+    { color: '#4A5BFF', phase: 2.30, amp: 0.92 }    // blue
+  ];
+
+  // Walk the perimeter of a rounded rectangle, returning points and the
+  // outward normal at each, so a strand can be pushed off it like a wave.
+  function perimeter(W, H, ins, R, step){
+    var x0 = ins, y0 = ins, x1 = W - ins, y1 = H - ins;
+    R = Math.min(R, (x1 - x0) / 2, (y1 - y0) / 2);
+    var segs = [
+      { t:'l', ax:x0+R, ay:y0,   bx:x1-R, by:y0,   nx:0,  ny:-1 },
+      { t:'a', cx:x1-R, cy:y0+R, a0:-90,  a1:0 },
+      { t:'l', ax:x1,   ay:y0+R, bx:x1,   by:y1-R, nx:1,  ny:0 },
+      { t:'a', cx:x1-R, cy:y1-R, a0:0,    a1:90 },
+      { t:'l', ax:x1-R, ay:y1,   bx:x0+R, by:y1,   nx:0,  ny:1 },
+      { t:'a', cx:x0+R, cy:y1-R, a0:90,   a1:180 },
+      { t:'l', ax:x0,   ay:y1-R, bx:x0,   by:y0+R, nx:-1, ny:0 },
+      { t:'a', cx:x0+R, cy:y0+R, a0:180,  a1:270 }
+    ];
+    var pts = [];
+    segs.forEach(function(sg){
+      var len = sg.t === 'l' ? Math.hypot(sg.bx - sg.ax, sg.by - sg.ay) : Math.PI * R / 2;
+      var n = Math.max(4, Math.round(len / step));
+      for (var i = 0; i < n; i++){
+        var f = i / n;
+        if (sg.t === 'l'){
+          pts.push({ x: sg.ax + (sg.bx - sg.ax) * f, y: sg.ay + (sg.by - sg.ay) * f, nx: sg.nx, ny: sg.ny });
+        } else {
+          var a = (sg.a0 + (sg.a1 - sg.a0) * f) * Math.PI / 180;
+          var cx = Math.cos(a), sy = Math.sin(a);
+          pts.push({ x: sg.cx + R * cx, y: sg.cy + R * sy, nx: cx, ny: sy });
+        }
+      }
+    });
+    return pts;
+  }
+
+  // Integer frequencies keep the wave seamless where the loop closes.
+  function strandOffset(u, phase){
+    var TAU = Math.PI * 2;
+    var v = 0.50 * Math.sin(TAU *  5 * u + phase)
+          + 0.30 * Math.sin(TAU *  9 * u + phase * 1.7 + 1.1)
+          + 0.20 * Math.sin(TAU * 14 * u + phase * 0.6 + 2.7);
+    var env = 0.52 + 0.48 * Math.sin(TAU * 2 * u + phase * 0.8);
+    return v * env * 1.6;
+  }
+
+  var frame = document.querySelector('.pageframe');
+  function paintFrame(){
+    if (!frame) return;
+    var svg = frame.querySelector('svg');
+    var W = frame.clientWidth, H = frame.clientHeight;
+    if (!W || !H) return;
+    var t = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--frame')) || 34;
+    var ins = t * 0.50, amp = t * 0.34, R = t * 2.2;
+    var pts = perimeter(W, H, ins, R, 5);
+    var N = pts.length;
+
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    var glow = svg.querySelector('.wire-glow'), core = svg.querySelector('.wire-core'),
+        sheen = svg.querySelector('.wire-sheen');
+    glow.innerHTML = ''; core.innerHTML = ''; sheen.innerHTML = '';
+    var coreW = Math.max(1.6, t * 0.05);
+    svg.style.setProperty('--wire-w', coreW + 'px');
+
+    STRANDS.forEach(function(st){
+      var d = '';
+      for (var i = 0; i <= N; i++){
+        var p = pts[i % N], u = (i % N) / N;
+        var off = amp * st.amp * strandOffset(u, st.phase);
+        d += (i ? ' L ' : 'M ') + (p.x + p.nx * off).toFixed(1) + ' ' + (p.y + p.ny * off).toFixed(1);
+      }
+      d += ' Z';
+      var halo = document.createElementNS(NS, 'path');
+      halo.setAttribute('d', d);
+      halo.setAttribute('fill', 'none');
+      halo.setAttribute('stroke', st.color);
+      halo.setAttribute('stroke-width', Math.max(2.4, t * 0.075));
+      halo.setAttribute('stroke-linecap', 'round');
+      glow.appendChild(halo);
+
+      var line = document.createElementNS(NS, 'path');
+      line.setAttribute('d', d);
+      line.setAttribute('fill', 'none');
+      line.setAttribute('stroke', st.color);
+      line.setAttribute('stroke-width', coreW);
+      line.setAttribute('stroke-linecap', 'round');
+      core.appendChild(line);
+
+      // catch-light down the length of the strand, only visible with the lights up
+      var gleam = document.createElementNS(NS, 'path');
+      gleam.setAttribute('d', d);
+      gleam.setAttribute('fill', 'none');
+      gleam.setAttribute('stroke', 'rgba(255,255,255,.9)');
+      gleam.setAttribute('stroke-width', Math.max(0.7, coreW * 0.34));
+      gleam.setAttribute('stroke-linecap', 'round');
+      sheen.appendChild(gleam);
+    });
+  }
+
+  function repaint(){ paintFrame(); paintAll(); }
+  window.addEventListener('load', repaint);
+  window.addEventListener('resize', repaint);
+  repaint();
+
+  /* ---- video: load and play only what's on screen ---- */
+  var clips = Array.prototype.slice.call(document.querySelectorAll('video.clip'));
+
+  // Chrome and Firefox take the smaller VP9 file; Safari falls back to H.264.
+  function attach(v){
+    if (v.getAttribute('src') || !v.dataset.src) return;
+    v.addEventListener('error', function once(){
+      var fb = v.dataset.srcFallback;
+      if (fb && v.getAttribute('src') !== fb){
+        v.setAttribute('src', fb);
+        v.load();
+        var p = v.play(); if (p && p.catch) p.catch(function(){});
+      }
+      v.removeEventListener('error', once);
+    });
+    v.setAttribute('src', v.dataset.src);
+    v.load();
+  }
+  if (clips.length){
+    if ('IntersectionObserver' in window){
+      var vio = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          var v = e.target;
+          if (e.isIntersecting){
+            attach(v);
+            var p = v.play();
+            if (p && p.catch) p.catch(function(){});
+          } else {
+            v.pause();
+            if (!v.muted) setMuted(v, true);   // never leave audio running off-screen
+          }
+        });
+      }, { rootMargin: '150px 0px', threshold: 0.15 });
+      clips.forEach(function(v){ vio.observe(v); });
+    } else {
+      clips.forEach(function(v){
+        attach(v);
+        v.play().catch(function(){});
+      });
+    }
+  }
+
+  /* ---- sound: browsers only allow it after a click, and only one at a time ---- */
+  function setMuted(v, m){
+    v.muted = m;
+    var btn = v.parentNode.querySelector('.snd');
+    if (btn){
+      btn.textContent = m ? '🔇' : '🔊';
+      btn.setAttribute('aria-pressed', String(!m));
+      btn.setAttribute('aria-label', m ? 'Turn sound on' : 'Turn sound off');
+    }
+  }
+  document.querySelectorAll('.snd').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var v = btn.parentNode.querySelector('video');
+      if (!v) return;
+      var turningOn = v.muted;
+      clips.forEach(function(other){ if (other !== v && !other.muted) setMuted(other, true); });
+      setMuted(v, !turningOn);
+      if (turningOn){
+        attach(v);
+        var p = v.play(); if (p && p.catch) p.catch(function(){});
+      }
+    });
+  });
+
+  /* ---- the ears refuse to be caught ---- */
+  var earsWrap = document.querySelector('.ears-wrap');
+  if (earsWrap && !reduce && window.matchMedia('(pointer:fine)').matches){
+    var ex = 0, ey = 0, idle;
+    var REACH = 190, MAX = 105;
+    function place(){
+      earsWrap.style.transform =
+        'translate(' + ex.toFixed(1) + 'px,' + ey.toFixed(1) + 'px) rotate(' + (ex * -0.09).toFixed(2) + 'deg)';
+    }
+    window.addEventListener('mousemove', function(e){
+      var r = earsWrap.getBoundingClientRect();
+      var cx = r.left + r.width / 2 - ex;          // resting centre, transform removed
+      var cy = r.top + r.height / 2 - ey;
+      var dx = e.clientX - cx, dy = e.clientY - cy;
+      var d = Math.hypot(dx, dy);
+      if (d < REACH && d > 0.5){
+        var push = Math.pow(1 - d / REACH, 1.4) * MAX;
+        ex = -dx / d * push;
+        ey = -dy / d * push;
+        // never let them flee off the screen
+        ex = Math.max(-MAX - 20, Math.min(10, ex));
+        ey = Math.max(-MAX - 20, Math.min(10, ey));
+      } else {
+        ex = 0; ey = 0;
+      }
+      place();
+      clearTimeout(idle);
+      idle = setTimeout(function(){ ex = 0; ey = 0; place(); }, 1400);
+    }, { passive: true });
+    document.addEventListener('mouseleave', function(){ ex = 0; ey = 0; place(); });
+  }
+
+  /* ---- scroll reveal ---- */
+  if (!reduce && 'IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.06 });
+    document.querySelectorAll('.reveal').forEach(function(el, i){
+      el.style.transitionDelay = (Math.min(i % 4, 3) * 60) + 'ms';
+      io.observe(el);
+    });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+  }
+})();
+</script>
+</body>
+</html>
