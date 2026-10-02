@@ -331,7 +331,7 @@ footer .fin{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-cont
 /* ============ cost to run ============ */
 .cost{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(40px,5vw,64px);align-items:start}
 @media(max-width:860px){.cost{grid-template-columns:1fr}}
-.cost-big{font-family:var(--display);font-weight:600;font-size:clamp(44px,7vw,72px);line-height:1;letter-spacing:-.02em;margin:0 0 14px}
+.cost-big{font-family:var(--display);font-weight:600;font-size:clamp(40px,6vw,64px);line-height:1;letter-spacing:-.02em;margin:0 0 14px;white-space:nowrap}
 .calc{display:grid;gap:14px;margin:26px 0 22px}
 .calc label{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:7px}
 .calc select,.calc input[type=number]{
@@ -352,7 +352,7 @@ footer .fin{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-cont
 .vs b{display:block;font-family:var(--display);font-weight:600;font-size:clamp(20px,2.6vw,27px);line-height:1.1;color:var(--ink)}
 .vs span{display:block;font-size:13px;color:var(--ink-soft);margin-top:5px;line-height:1.35}
 .vs span span{display:inline;margin:0}
-.vs .us b,.vs .save b{color:var(--red)}
+.vs .us b{color:var(--red)}
 @media(max-width:420px){.vs{grid-template-columns:1fr}}
 .bars{list-style:none;margin:0;padding:0}
 .bars li{display:grid;grid-template-columns:150px 1fr 46px;gap:14px;align-items:center;padding:9px 0}
@@ -364,11 +364,20 @@ footer .fin{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-cont
 .bars .x{font-family:var(--mono);font-size:12px;color:var(--ink-faint);text-align:right}
 .bars li.us .nm,.bars li.us .amt,.bars li.us .x{color:var(--red)}
 .bars li.us .bar{background:var(--red)}
-.bars li.on .bar{background:var(--amber)}
-.bars li.on .nm{color:var(--amber)}
-html[data-lights="on"] .bars li.on .nm{color:#B07A00}
+.bars li.on .bar{background:var(--pick)}
+.bars li.on .nm,.bars li.on .amt{color:var(--pick)}
 @media(max-width:520px){.bars li{grid-template-columns:104px 1fr 38px;gap:10px}.bars .nm{font-size:14.5px}}
 html[data-lights="off"] .calc{color-scheme:dark}
+#cost{--pick:var(--amber);--save:var(--lime)}
+html[data-lights="on"] #cost{--pick:#A87300;--save:#13893F}
+.calc .pick label{color:var(--pick)}
+.calc .pick select{color:var(--pick);border-color:var(--pick)}
+.calc .pick select option{color:var(--ink);background:var(--card)}
+.vs .them b,.vs .them span{color:var(--pick)}
+.vs .save b{color:var(--save)}
+.vs .save strong{color:var(--save);font-family:var(--display);font-weight:600;font-size:17px;letter-spacing:.01em}
+.cost-note{font-size:14.5px;color:var(--ink-soft);line-height:1.55;margin:16px 0 0;padding-top:14px;border-top:1px solid var(--line)}
+.cost-note strong{color:var(--ink)}
 .fine{font-size:13px;font-style:italic;color:var(--ink-faint);line-height:1.5;margin:18px 0 0}
 /* ============ motion ============ */
 .reveal{opacity:0;transform:translateY(22px)}
@@ -556,10 +565,10 @@ html[data-lights="off"] .calc{color-scheme:dark}
     <div class="cost">
       <div class="reveal">
         <p class="eyebrow">💸 Cost to run</p>
-        <p class="cost-big"><span data-cost="us-yr">$6</span> a&nbsp;year.</p>
+        <p class="cost-big"><span data-cost="us-yr">$3.57</span> a&nbsp;year.</p>
         <p style="color:var(--ink-soft)">That's the electricity bill for <span data-cost="len-txt">100 ft</span> of Trippy Wire™ left on <span data-cost="hrs-txt">around the clock</span> for twelve months. Tell us what you're lighting with now and we'll put the two side by side.</p>
         <div class="calc">
-          <div>
+          <div class="pick">
             <label for="costSrc">Current light source</label>
             <select id="costSrc"></select>
           </div>
@@ -581,18 +590,19 @@ html[data-lights="off"] .calc{color-scheme:dark}
           </div>
         </div>
         <div class="vs" aria-live="polite">
-          <div><b data-cost="them-yr">$223</b><span>a year on <span data-cost="them-nm">LED rope light</span></span></div>
-          <div class="us"><b data-cost="us-yr">$6</b><span>a year on Trippy Wire</span></div>
-          <div class="save"><b data-cost="save-yr">$217</b><span>saved every year · <span data-cost="save-5">$1,085</span> over five</span></div>
+          <div class="them"><b data-cost="them-yr">$223</b><span>a year on <span data-cost="them-nm">LED rope light</span></span></div>
+          <div class="us"><b data-cost="us-yr">$3.57</b><span>a year on Trippy Wire</span></div>
+          <div class="save"><b data-cost="save-yr">$220</b><span><strong>saved</strong> every year</span></div>
         </div>
         <p class="fine" style="margin-top:0">Electricity only. It doesn't count the driver, the conduit, the electrician, or replacing a failed segment — all of which Trippy Wire also avoids.</p>
       </div>
       <div class="reveal">
         <p class="kicker" style="margin:6px 0 12px">Cost per year · <span data-cost="len-txt">100 ft</span> · <span data-cost="hrs-short">24/7</span></p>
         <ul class="bars" id="costBars"></ul>
+        <p class="cost-note">Figured on green, our hungriest color, at <strong>2.4&nbsp;W per 100&nbsp;ft</strong>. Red draws 1.1&nbsp;W and blue 0.45&nbsp;W. Run all three at once — red, green, and blue, enough to mix any color in the spectrum — and it's still only <strong>4&nbsp;W</strong>.</p>
       </div>
     </div>
-    <p class="fine reveal">Scaled per linear foot at full output, US average retail electricity at $0.17/kWh. Wattages are typical catalogue figures for each product class and vary by manufacturer — verify against the specific product being replaced. Trippy Wire is figured at 4 W of illuminator draw per 100 ft.</p>
+    <p class="fine reveal">Scaled per linear foot at full output, US average retail electricity at $0.17/kWh. Wattages are typical catalogue figures for each product class and vary by manufacturer — verify against the specific product being replaced. Trippy Wire is figured at the green illuminator's typical 2.4 W per 100 ft run (datasheet, 5 V) — the conservative case; red and blue draw less.</p>
   </div>
 </section>
 
@@ -732,7 +742,8 @@ html[data-lights="off"] .calc{color-scheme:dark}
       <figure class="wide"><video class="clip" muted loop playsinline preload="none" poster="assets/g-pool-poster.jpg" data-src="assets/g-pool.webm" data-src-fallback="assets/g-pool.mp4" aria-label="A swimming pool rimmed in glowing magenta and blue Trippy Wire at night."></video><figcaption>Pool rim · one run, two ends, two colors</figcaption></figure>
       <figure class="wide"><img loading="lazy" decoding="async" src="assets/g-ice.jpg" alt="Trippy Wire frozen inside a block of ice, still glowing green."><figcaption>Frozen in a block of ice · still lit</figcaption></figure>
       <figure><video class="clip" muted loop playsinline preload="none" poster="assets/worn-poster.jpg" data-src="assets/worn.webm" data-src-fallback="assets/worn.mp4" aria-label="A festival-goer wearing glowing Trippy Wire, moving through a crowd at dusk."></video><figcaption>Worn all night · festival</figcaption></figure>
-      <figure class="full"><video class="clip" muted loop playsinline preload="none" poster="assets/rope-park-poster.jpg" data-src="assets/rope-park.webm" data-src-fallback="assets/rope-park.mp4" aria-label="Two people turning a glowing jump rope of Trippy Wire in a city park at night."></video><figcaption>Jump rope in the park · one run, two ends</figcaption></figure>
+      <figure class="wide"><video class="clip" muted loop playsinline preload="none" poster="assets/rope-park-poster.jpg" data-src="assets/rope-park.webm" data-src-fallback="assets/rope-park.mp4" aria-label="Two people turning a glowing jump rope of Trippy Wire in a city park at night."></video><figcaption>Jump rope in the park · one run, two ends</figcaption></figure>
+      <figure><video class="clip" style="object-position:50% 25%" muted loop playsinline preload="none" poster="assets/g-flow-poster.jpg" data-src="assets/g-flow.webm" data-src-fallback="assets/g-flow.mp4" aria-label="A dancer at a festival campsite spinning streamers of red and blue Trippy Wire overhead."></video><figcaption>Flow streamers · festival camp</figcaption></figure>
     </div>
   </div>
 </section>
@@ -1213,7 +1224,7 @@ html[data-lights="off"] .calc{color-scheme:dark}
     var src = document.getElementById('costSrc');
     if (!src) return;
     var RATE = 0.17;                        // $/kWh, US average retail
-    var US = { nm: 'Trippy Wire™', w: 4 };  // watts per 100 ft
+    var US = { nm: 'Trippy Wire™', w: 2.4 };  // watts per 100 ft: green, the hungriest color
     var THEM = [
       { nm: 'EL wire',           w: 30  },
       { nm: 'LED rope light',    w: 150 },
@@ -1231,7 +1242,7 @@ html[data-lights="off"] .calc{color-scheme:dark}
     src.value = '1';
 
     function money(n){
-      if (n < 1) return '$' + n.toFixed(2);   // short runs: show the cents
+      if (n < 10) return '$' + n.toFixed(2);  // small numbers: show the cents
       return '$' + Math.round(n).toLocaleString('en-US');
     }
     function watts(w100, ft){ return w100 * ft / 100; }
@@ -1249,7 +1260,6 @@ html[data-lights="off"] .calc{color-scheme:dark}
       set('them-yr', money(them));
       set('them-nm', pick.nm);
       set('save-yr', money(them - us));
-      set('save-5', money((them - us) * 5));
       set('len-txt', ft.toLocaleString('en-US') + ' ft');
       set('hrs-txt', h === 24 ? 'around the clock' : h + ' hours a day');
       set('hrs-short', h === 24 ? '24/7' : h + ' h/day');
