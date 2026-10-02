@@ -328,6 +328,48 @@ details .in li{margin-bottom:5px}
 footer{border-top:1.5px solid var(--line);padding:26px 0 40px;font-family:var(--mono);font-size:11.5px;color:var(--ink-faint)}
 footer .fin{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-content:space-between}
 
+/* ============ cost to run ============ */
+.cost{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(40px,5vw,64px);align-items:start}
+@media(max-width:860px){.cost{grid-template-columns:1fr}}
+.cost-big{font-family:var(--display);font-weight:600;font-size:clamp(44px,7vw,72px);line-height:1;letter-spacing:-.02em;margin:0 0 14px}
+.calc{display:grid;gap:14px;margin:26px 0 22px}
+.calc label{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:7px}
+.calc select,.calc input[type=number]{
+  width:100%;font:inherit;font-size:16px;color:var(--ink);background:var(--card);
+  border:1.5px solid var(--line);border-radius:14px;padding:11px 14px;transition:border-color .2s;
+}
+.calc select:focus,.calc input[type=number]:focus{border-color:var(--red);outline:none}
+.calc .len{display:flex;gap:12px;align-items:center}
+.calc .len input[type=number]{width:110px;flex-shrink:0}
+.calc input[type=range]{flex:1;min-width:0;height:28px;background:transparent;-webkit-appearance:none;appearance:none;cursor:pointer}
+.calc input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:3px;background:var(--line)}
+.calc input[type=range]::-moz-range-track{height:6px;border-radius:3px;background:var(--line)}
+.calc input[type=range]::-moz-range-progress{height:6px;border-radius:3px;background:var(--red)}
+.calc input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;margin-top:-8px;border-radius:50%;background:var(--red);border:3px solid var(--bg-2);box-shadow:0 0 0 1.5px var(--red)}
+.calc input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--red);border:3px solid var(--bg-2);box-shadow:0 0 0 1.5px var(--red)}
+.vs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+.vs div{background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:14px 14px 12px}
+.vs b{display:block;font-family:var(--display);font-weight:600;font-size:clamp(20px,2.6vw,27px);line-height:1.1;color:var(--ink)}
+.vs span{display:block;font-size:13px;color:var(--ink-soft);margin-top:5px;line-height:1.35}
+.vs span span{display:inline;margin:0}
+.vs .us b,.vs .save b{color:var(--red)}
+@media(max-width:420px){.vs{grid-template-columns:1fr}}
+.bars{list-style:none;margin:0;padding:0}
+.bars li{display:grid;grid-template-columns:150px 1fr 46px;gap:14px;align-items:center;padding:9px 0}
+.bars .nm{font-family:var(--display);font-weight:500;font-size:16px;line-height:1.15}
+.bars .nm small{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--ink-faint);margin-top:3px}
+.bars .tr{display:flex;align-items:center;gap:10px;min-width:0}
+.bars .bar{height:30px;border-radius:7px;background:var(--line);min-width:6px;flex-shrink:0;transition:width .45s cubic-bezier(.2,.8,.2,1),background .3s}
+.bars .amt{font-family:var(--display);font-weight:600;font-size:17px;white-space:nowrap}
+.bars .x{font-family:var(--mono);font-size:12px;color:var(--ink-faint);text-align:right}
+.bars li.us .nm,.bars li.us .amt,.bars li.us .x{color:var(--red)}
+.bars li.us .bar{background:var(--red)}
+.bars li.on .bar{background:var(--amber)}
+.bars li.on .nm{color:var(--amber)}
+html[data-lights="on"] .bars li.on .nm{color:#B07A00}
+@media(max-width:520px){.bars li{grid-template-columns:104px 1fr 38px;gap:10px}.bars .nm{font-size:14.5px}}
+html[data-lights="off"] .calc{color-scheme:dark}
+.fine{font-size:13px;font-style:italic;color:var(--ink-faint);line-height:1.5;margin:18px 0 0}
 /* ============ motion ============ */
 .reveal{opacity:0;transform:translateY(22px)}
 .reveal.in{opacity:1;transform:none;transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
@@ -364,6 +406,7 @@ footer .fin{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-cont
     <div class="nav-links">
       <a href="#features">Features</a>
       <a href="#different">Different</a>
+      <a href="#cost">Cost</a>
       <a href="#colors">Colors</a>
       <a href="#fiber">Trippy Wire</a>
       <a href="#kit">The kit</a>
@@ -495,20 +538,67 @@ footer .fin{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-cont
         <p class="eyebrow">✨ Refractive &amp; diffusive grades</p>
         <h3 style="margin-bottom:12px">Bend it and it flares. Light it from both ends and both colors run the whole&nbsp;way.</h3>
         <p style="color:var(--ink-soft)"><strong style="color:var(--ink)">It reacts to your hands.</strong> Bend Trippy Wire into a tight radius and the bend itself gets brighter — light traveling down the core hits the curve at an angle it can't hold, and escapes right there. Pinch it, loop it, hand it to someone, and the brightest point in the room is wherever their fingers are. You can do that because the glowing part carries no current and makes no heat.</p>
-        <p style="color:var(--ink-soft)"><strong style="color:var(--ink)">And it runs both ways.</strong> Put an illuminator on each end and the light is bi-directional — red travels the full length one way, green travels it the other, and both colors live in the same run at once. It doesn't settle into a fade from one color to the other. Every loop and bend shows you which way each color is coming from, and the run is brighter end to end because it's fed from both sides.</p>
-        <p style="color:var(--ink-soft);margin-bottom:0">Premium lit from both ends gives you a smooth gradient — one color fading into the other — and holds an even line no matter how it's handled. Refractive and diffusive give you bi-directional light and the bend flare. Pick a non-premium grade when you want the light to answer back.</p>
+        <p style="color:var(--ink-soft)"><strong style="color:var(--ink)">And refractive runs both ways.</strong> Put an illuminator on each end and the light is bi-directional — red travels the full length one way, green travels it the other, and both colors live in the same run at once. It doesn't settle into a fade from one color to the other. Every loop and bend shows you which way each color is coming from, and the run is brighter end to end because it's fed from both sides.</p>
+        <p style="color:var(--ink-soft);margin-bottom:0">Refractive is the only bi-directional grade. Diffusive and premium lit from both ends give you a smooth gradient — one color fading into the other — and premium holds an even line no matter how it's handled. The bend flare is refractive and diffusive. Pick refractive when you want the light to answer back in every way it can.</p>
       </div>
       <div class="duo reveal">
-        <div class="board"><div class="board-in"><video class="clip" muted loop playsinline preload="none" poster="assets/bend-flare-poster.jpg" data-src="assets/bend-flare.webm" data-src-fallback="assets/bend-flare.mp4" aria-label="Hands pinching a lit run of Trippy Wire into a tight U, the bend flaring brighter than the rest of the run."></video></div></div>
-        <div class="board"><div class="board-in"><video class="clip" muted loop playsinline preload="none" poster="assets/two-ends-poster.jpg" data-src="assets/two-ends.webm" data-src-fallback="assets/two-ends.mp4" aria-label="A single run of Trippy Wire lit red from one end and green from the other, looped and twisted between two hands."></video></div></div>
+        <div class="board"><div class="board-in"><video class="clip" muted loop playsinline preload="none" poster="assets/bend-flare-2-poster.jpg" data-src="assets/bend-flare-2.webm" data-src-fallback="assets/bend-flare-2.mp4" aria-label="Hands pinching a lit run of Trippy Wire into a tight U, the bend flaring brighter than the rest of the run."></video></div></div>
+        <div class="board"><div class="board-in"><video class="clip" muted loop playsinline preload="none" poster="assets/two-ends-2-poster.jpg" data-src="assets/two-ends-2.webm" data-src-fallback="assets/two-ends-2.mp4" aria-label="A single run of Trippy Wire lit red from one end and green from the other, looped and twisted between two hands."></video></div></div>
       </div>
     </div>
   </div>
 </section>
 
 
+<!-- ============ COST ============ -->
+<section id="cost" class="tint">
+  <div class="wrap">
+    <div class="cost">
+      <div class="reveal">
+        <p class="eyebrow">💸 Cost to run</p>
+        <p class="cost-big"><span data-cost="us-yr">$6</span> a&nbsp;year.</p>
+        <p style="color:var(--ink-soft)">That's the electricity bill for <span data-cost="len-txt">100 ft</span> of Trippy Wire™ left on <span data-cost="hrs-txt">around the clock</span> for twelve months. Tell us what you're lighting with now and we'll put the two side by side.</p>
+        <div class="calc">
+          <div>
+            <label for="costSrc">Current light source</label>
+            <select id="costSrc"></select>
+          </div>
+          <div>
+            <label for="costLen">Estimated length (ft)</label>
+            <div class="len">
+              <input id="costLen" type="number" min="1" max="5000" step="1" value="100" inputmode="numeric">
+              <input id="costLenR" type="range" min="10" max="1000" step="10" value="100" aria-label="Estimated length in feet">
+            </div>
+          </div>
+          <div>
+            <label for="costHrs">Hours on per day</label>
+            <select id="costHrs">
+              <option value="24">24 h · around the clock</option>
+              <option value="12">12 h · dusk to dawn</option>
+              <option value="8">8 h · evenings</option>
+              <option value="4">4 h · events and shows</option>
+            </select>
+          </div>
+        </div>
+        <div class="vs" aria-live="polite">
+          <div><b data-cost="them-yr">$223</b><span>a year on <span data-cost="them-nm">LED rope light</span></span></div>
+          <div class="us"><b data-cost="us-yr">$6</b><span>a year on Trippy Wire</span></div>
+          <div class="save"><b data-cost="save-yr">$217</b><span>saved every year · <span data-cost="save-5">$1,085</span> over five</span></div>
+        </div>
+        <p class="fine" style="margin-top:0">Electricity only. It doesn't count the driver, the conduit, the electrician, or replacing a failed segment — all of which Trippy Wire also avoids.</p>
+      </div>
+      <div class="reveal">
+        <p class="kicker" style="margin:6px 0 12px">Cost per year · <span data-cost="len-txt">100 ft</span> · <span data-cost="hrs-short">24/7</span></p>
+        <ul class="bars" id="costBars"></ul>
+      </div>
+    </div>
+    <p class="fine reveal">Scaled per linear foot at full output, US average retail electricity at $0.17/kWh. Wattages are typical catalogue figures for each product class and vary by manufacturer — verify against the specific product being replaced. Trippy Wire is figured at 4 W of illuminator draw per 100 ft.</p>
+  </div>
+</section>
+
+
 <!-- ============ COLORS ============ -->
-<section id="colors" class="tint">
+<section id="colors">
   <div class="wrap">
     <div class="sec-head reveal">
       <p class="eyebrow">🎨 Colors</p>
@@ -535,7 +625,7 @@ footer .fin{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-cont
 
 
 <!-- ============ FIBER ============ -->
-<section id="fiber">
+<section id="fiber" class="tint">
   <div class="wrap">
     <div class="sec-head reveal">
       <p class="eyebrow">🧵 Trippy Wire™</p>
@@ -548,14 +638,14 @@ footer .fin{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-cont
         <img loading="lazy" decoding="async" src="assets/fiber-diffusive.jpg" alt="A swimming pool rimmed with diffusive Trippy Wire, magenta on one side and blue on the other.">
         <div class="txt">
           <h3>Diffusive</h3>
-          <p>Bi-directional when lit from both ends — each color runs the full length — and brighter than refractive. The one for static installs and long runs — this pool is a single run, magenta at one end, blue at the other.</p>
+          <p>Even gradient when lit from both ends, and brighter than refractive. The one for static installs and long runs — this pool is a single run, magenta at one end, blue at the other.</p>
         </div>
       </div>
       <div class="fiber">
         <video class="clip" muted loop playsinline preload="none" poster="assets/ribbon-poster.jpg" data-src="assets/ribbon.webm" data-src-fallback="assets/ribbon.mp4" aria-label="A ribbon of Trippy Wire spun through the air at night, shifting blue to cyan."></video>
         <div class="txt">
           <h3>Refractive</h3>
-          <p>Shifts color with viewing angle and with how it's bent. Lit from both ends in two colors, one run reads differently to every person in the room. The one for handheld, worn, and moving work.</p>
+          <p>Shifts color with viewing angle and with how it's bent. The only bi-directional grade: lit from both ends in two colors, each color runs the full length, so one run reads differently to every person in the room. The one for handheld, worn, and moving work.</p>
         </div>
       </div>
       <div class="fiber">
@@ -563,7 +653,7 @@ footer .fin{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-cont
         <div class="txt">
           <span class="tag">Brightest</span>
           <h3>Premium</h3>
-          <p>The brightest Trippy Wire we offer, with an even gradient from both ends and the strongest motion smear. Shown here on three units — one per color.</p>
+          <p>The brightest Trippy Wire we offer, with an even gradient from both ends and the strongest motion smear. Bright enough to read in daylight, not just after dark. Shown here on three units — one per color.</p>
         </div>
       </div>
     </div>
@@ -572,7 +662,7 @@ footer .fin{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-cont
 
 
 <!-- ============ KIT ============ -->
-<section id="kit" class="tint">
+<section id="kit">
   <div class="wrap">
     <div class="sec-head reveal">
       <p class="eyebrow">📦 The kit</p>
@@ -629,7 +719,7 @@ footer .fin{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-cont
 
 
 <!-- ============ IN THE WILD ============ -->
-<section id="wild">
+<section id="wild" class="tint">
   <div class="wrap">
     <div class="sec-head reveal">
       <p class="eyebrow">🌙 In the wild</p>
@@ -649,7 +739,7 @@ footer .fin{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-cont
 
 
 <!-- ============ WHERE IT FITS ============ -->
-<section id="fit" class="tint">
+<section id="fit">
   <div class="wrap">
     <div class="sec-head reveal">
       <p class="eyebrow">🔮 Where it fits your work</p>
@@ -723,7 +813,7 @@ footer .fin{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-cont
 
 
 <!-- ============ FAQ ============ -->
-<section id="faq">
+<section id="faq" class="tint">
   <div class="wrap">
     <div class="sec-head reveal">
       <p class="eyebrow">❓ Questions we actually get</p>
@@ -751,7 +841,7 @@ footer .fin{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-cont
 
       <details>
         <summary>Is it visible in daylight?</summary>
-        <div class="in"><p>Not in direct sun. It's an accent light for low-to-no ambient light. It holds up well in a normally lit interior — that's the left column of the color photos above — but it isn't a daytime signage product.</p></div>
+        <div class="in"><p>Premium, yes — it's bright enough to read in daylight. Refractive and diffusive are accent lights for low-to-no ambient light: they hold up well in a normally lit interior — that's the left column of the color photos above — but they're not for direct sun.</p></div>
       </details>
 
       <details>
@@ -784,7 +874,7 @@ footer .fin{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-cont
 
 
 <!-- ============ CTA ============ -->
-<section id="demo" class="cta tint">
+<section id="demo" class="cta">
   <div class="wrap">
     <p class="eyebrow reveal">Next step</p>
     <h2 class="reveal">Give us thirty minutes and a dark&nbsp;room.</h2>
@@ -1117,6 +1207,79 @@ footer .fin{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-cont
     }, { passive: true });
     document.addEventListener('mouseleave', function(){ ex = 0; ey = 0; place(); });
   }
+
+  /* ---- cost to run: watts per foot x hours x rate ---- */
+  (function(){
+    var src = document.getElementById('costSrc');
+    if (!src) return;
+    var RATE = 0.17;                        // $/kWh, US average retail
+    var US = { nm: 'Trippy Wire™', w: 4 };  // watts per 100 ft
+    var THEM = [
+      { nm: 'EL wire',           w: 30  },
+      { nm: 'LED rope light',    w: 150 },
+      { nm: 'LED neon flex',     w: 200 },
+      { nm: 'Glass neon',        w: 400 },
+      { nm: 'Incandescent rope', w: 430 }
+    ];
+    var len = document.getElementById('costLen'), lenR = document.getElementById('costLenR');
+    var hrs = document.getElementById('costHrs'), bars = document.getElementById('costBars');
+    THEM.forEach(function(t, i){
+      var o = document.createElement('option');
+      o.value = i; o.textContent = t.nm + ' · ' + t.w + ' W per 100 ft';
+      src.appendChild(o);
+    });
+    src.value = '1';
+
+    function money(n){
+      if (n < 1) return '$' + n.toFixed(2);   // short runs: show the cents
+      return '$' + Math.round(n).toLocaleString('en-US');
+    }
+    function watts(w100, ft){ return w100 * ft / 100; }
+    function perYear(w100, ft, h){ return watts(w100, ft) / 1000 * h * 365 * RATE; }
+    function fmtW(w){ return (w < 10 ? +w.toFixed(1) : Math.round(w)).toLocaleString('en-US') + ' W'; }
+    function set(key, txt){
+      document.querySelectorAll('[data-cost="' + key + '"]').forEach(function(el){ el.textContent = txt; });
+    }
+
+    function render(){
+      var ft = Math.max(1, Math.min(5000, parseFloat(len.value) || 1));
+      var h = +hrs.value, pick = THEM[+src.value];
+      var us = perYear(US.w, ft, h), them = perYear(pick.w, ft, h);
+      set('us-yr', money(us));
+      set('them-yr', money(them));
+      set('them-nm', pick.nm);
+      set('save-yr', money(them - us));
+      set('save-5', money((them - us) * 5));
+      set('len-txt', ft.toLocaleString('en-US') + ' ft');
+      set('hrs-txt', h === 24 ? 'around the clock' : h + ' hours a day');
+      set('hrs-short', h === 24 ? '24/7' : h + ' h/day');
+
+      var max = perYear(THEM[THEM.length - 1].w, ft, h);
+      bars.innerHTML = '';
+      [US].concat(THEM).forEach(function(r){
+        var c = perYear(r.w, ft, h), li = document.createElement('li');
+        if (r === US) li.className = 'us'; else if (r === pick) li.className = 'on';
+        li.innerHTML =
+          '<span class="nm"></span>' +
+          '<span class="tr"><span class="bar"></span><span class="amt"></span></span>' +
+          '<span class="x"></span>';
+        li.querySelector('.nm').innerHTML = r.nm + '<small>' + fmtW(watts(r.w, ft)) + '</small>';
+        li.querySelector('.bar').style.width = (c / max * 72) + '%';
+        li.querySelector('.amt').textContent = money(c);
+        li.querySelector('.x').textContent = Math.round(r.w / US.w) + '×';
+        bars.appendChild(li);
+      });
+    }
+    len.addEventListener('input', function(){
+      var v = parseFloat(len.value);
+      if (v) lenR.value = Math.min(1000, Math.max(10, v));
+      render();
+    });
+    lenR.addEventListener('input', function(){ len.value = lenR.value; render(); });
+    src.addEventListener('change', render);
+    hrs.addEventListener('change', render);
+    render();
+  })();
 
   /* ---- scroll reveal ---- */
   if (!reduce && 'IntersectionObserver' in window){
