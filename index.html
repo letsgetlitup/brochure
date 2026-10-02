@@ -167,7 +167,19 @@ html[data-lights="on"] .wire-sheen{opacity:.75}
 }
 .switch:hover{border-color:var(--red);color:var(--ink)}
 .bulb{width:13px;height:13px;border-radius:50%;background:var(--ink-faint);transition:.35s}
-html[data-lights="on"] .bulb{background:var(--amber);box-shadow:0 0 0 4px rgba(255,198,66,.28),0 0 14px var(--amber)}
+html[data-lights="off"] .bulb{background:var(--amber);box-shadow:0 0 0 4px rgba(255,198,66,.28),0 0 14px var(--amber)}
+/* wire on (dark page): a red laser runs around the switch */
+@property --laser-a{syntax:'<angle>';initial-value:0deg;inherits:false}
+.switch{position:relative;isolation:isolate}
+html[data-lights="off"] .switch{border-color:rgba(243,22,39,.45);box-shadow:0 0 12px rgba(243,22,39,.35),inset 0 0 8px rgba(243,22,39,.12)}
+html[data-lights="off"] .switch::before{
+  content:"";position:absolute;inset:-1.5px;border-radius:inherit;padding:2px;pointer-events:none;
+  background:conic-gradient(from var(--laser-a),transparent 0 62%,rgba(243,22,39,.25) 76%,#ff2436 93%,#fff 97%,transparent 100%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);
+  filter:drop-shadow(0 0 3px #ff2436);animation:laser 2.2s linear infinite;
+}
+@keyframes laser{to{--laser-a:360deg}}
 @media(max-width:1180px){.nav-links{display:none}}
 
 /* ============ hero ============ */
