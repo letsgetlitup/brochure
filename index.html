@@ -152,10 +152,10 @@ html[data-lights="on"] .wire-sheen{opacity:.75}
 }
 .nav-in{display:flex;align-items:center;gap:14px;padding-block:11px}
 .nav img{height:26px;width:auto;border-radius:5px}
-.nav-links{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+.nav-links{display:flex;gap:2px;margin-left:auto;flex-wrap:wrap}
 .nav-links a{
   font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;
-  text-decoration:none;color:var(--ink-soft);padding:7px 11px;border-radius:999px;
+  text-decoration:none;color:var(--ink-soft);padding:7px 8px;border-radius:999px;
   transition:.18s;white-space:nowrap;
 }
 .nav-links a:hover{color:var(--ink);background:var(--card-2)}
@@ -168,7 +168,7 @@ html[data-lights="on"] .wire-sheen{opacity:.75}
 .switch:hover{border-color:var(--red);color:var(--ink)}
 .bulb{width:13px;height:13px;border-radius:50%;background:var(--ink-faint);transition:.35s}
 html[data-lights="on"] .bulb{background:var(--amber);box-shadow:0 0 0 4px rgba(255,198,66,.28),0 0 14px var(--amber)}
-@media(max-width:860px){.nav-links{display:none}}
+@media(max-width:1180px){.nav-links{display:none}}
 
 /* ============ hero ============ */
 .hero{position:relative;padding:clamp(46px,8vw,86px) 0 clamp(46px,5vw,62px);overflow:hidden}
@@ -213,6 +213,7 @@ section{padding:clamp(52px,8vw,92px) 0}
 .feat .ico{font-size:30px;line-height:1;margin-bottom:12px;display:block}
 .feat h3{margin-bottom:7px}
 .feat p{font-size:15px;color:var(--ink-soft);margin:0;line-height:1.55}
+.feat .seeit{margin-top:14px;font-weight:600;color:var(--ink);display:flex;flex-direction:column;align-items:flex-start;gap:10px}
 
 /* ============ split ============ */
 .split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(48px,4vw,58px);align-items:center}
@@ -467,7 +468,7 @@ html[data-lights="on"] #cost{--pick:#A87300;--save:#13893F}
       <div class="feat">
         <span class="ico">🛡️</span>
         <h3>Zero shock risk</h3>
-        <p>Trippy Wire is glass and polymer. No current, no heat. Touch it, wrap it around someone, cut it with scissors while it's running.</p>
+        <p>There's no electricity in Trippy Wire — no current, no heat. Touch it, wrap it around someone, cut it with scissors while it's running.</p>
       </div>
       <div class="feat">
         <span class="ico">🔌</span>
@@ -478,6 +479,9 @@ html[data-lights="on"] #cost{--pick:#A87300;--save:#13893F}
         <span class="ico">🎭</span>
         <h3>1&nbsp;mm and invisible</h3>
         <p>Clear and unnoticeable when off. A saturated, continuous stroke of color when on.</p>
+        <p class="seeit">See that here — watch the wire around this page.
+          <button class="switch" type="button" data-lights-toggle aria-pressed="false"><span class="bulb" aria-hidden="true"></span><span data-lights-label>Lights on</span></button>
+        </p>
       </div>
     </div>
 
@@ -498,9 +502,8 @@ html[data-lights="on"] #cost{--pick:#A87300;--save:#13893F}
 <section id="different">
   <div class="wrap">
     <div class="sec-head reveal">
-      <p class="eyebrow">😎 What makes us different</p>
-      <h2>Not a replacement for LED tape. The right tool where tape is the wrong&nbsp;one.</h2>
-      <p>We're not going to out-lumen an LED. What we do instead is go places tape can't, and do a thing in motion that point-source light physically cannot reproduce.</p>
+      <h2>😎 What makes us&nbsp;different</h2>
+      <p><strong style="color:var(--ink)">Not a replacement for LED tape. The right tool where tape is the wrong&nbsp;one.</strong> We're not going to out-lumen an LED. What we do instead is go places tape can't, and do a thing in motion that point-source light physically cannot reproduce.</p>
     </div>
 
     <div class="tablewrap reveal">
@@ -524,7 +527,12 @@ html[data-lights="on"] #cost{--pick:#A87300;--save:#13893F}
       </table>
     </div>
 
-    <div class="split" style="margin-top:clamp(36px,6vw,64px)">
+    <div class="sec-head reveal" style="margin-top:clamp(52px,8vw,88px)">
+      <h2>🌀 Why we call it Trippy&nbsp;Wire</h2>
+      <p>Two things it does that no other light can: it smears into solid ribbons when it moves, and it flares and shifts in your hands when you bend it.</p>
+    </div>
+
+    <div class="split">
       <div class="duo reveal">
         <div class="board"><div class="board-in clipwrap"><video class="clip" muted loop playsinline preload="none" poster="assets/smear-1-poster.jpg" data-src="assets/smear-1.mp4" data-sound="1" aria-label="Trippy Wire spun by hand, the strands smearing into solid ribbons of colour."></video>
           <button class="snd" type="button" aria-pressed="false" aria-label="Turn sound on">🔇</button>
@@ -912,13 +920,17 @@ html[data-lights="on"] #cost{--pick:#A87300;--save:#13893F}
 
   /* ---- lights switch ---- */
   var btn = document.getElementById('lights');
-  var label = document.getElementById('lightsLabel');
-  btn.addEventListener('click', function(){
+  btn.setAttribute('data-lights-toggle', '');
+  document.getElementById('lightsLabel').setAttribute('data-lights-label', '');
+  var toggles = document.querySelectorAll('[data-lights-toggle]');
+  var labels = document.querySelectorAll('[data-lights-label]');
+  function flipLights(){
     var on = document.documentElement.getAttribute('data-lights') === 'on';
     document.documentElement.setAttribute('data-lights', on ? 'off' : 'on');
-    btn.setAttribute('aria-pressed', String(!on));
-    label.textContent = on ? 'Lights on' : 'Lights off';
-  });
+    toggles.forEach(function(t){ t.setAttribute('aria-pressed', String(!on)); });
+    labels.forEach(function(l){ l.textContent = on ? 'Lights on' : 'Lights off'; });
+  }
+  toggles.forEach(function(t){ t.addEventListener('click', flipLights); });
 
   /* ---- splat blobs behind every image (the signature) ---- */
   var NS = 'http://www.w3.org/2000/svg';
