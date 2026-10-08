@@ -351,6 +351,10 @@ details .in li{margin-bottom:5px}
 
 footer{border-top:1.5px solid var(--line);padding:26px 0 40px;font-family:var(--mono);font-size:11.5px;color:var(--ink-faint)}
 footer .fin{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+footer .legal{display:flex;flex-direction:column;gap:6px}
+footer .social{display:flex;gap:6px 18px;flex-wrap:wrap}
+footer .social a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid transparent}
+footer .social a:hover{color:var(--red);border-bottom-color:var(--red)}
 
 /* ============ cost to run ============ */
 .cost{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(40px,5vw,64px);align-items:start}
@@ -938,8 +942,14 @@ html[data-lights="on"] #cost{--pick:#A87300;--save:#13893F}
 
 <footer>
   <div class="wrap fin">
-    <span>© 2026 Inner Child Technology · Detroit, Michigan</span>
-    <span>Trippy Wire™ · RoHS compliant · CE marked with declaration</span>
+    <div class="legal">
+      <span>© 2026 Inner Child Technology · Detroit, Michigan</span>
+      <span>Trippy Wire™ · RoHS compliant · CE marked with declaration</span>
+    </div>
+    <span class="social">
+      <a href="https://www.instagram.com/letsgetlitup/" target="_blank" rel="noopener">Instagram @letsgetlitup</a>
+      <a href="https://www.tiktok.com/@letsgetlitup_" target="_blank" rel="noopener">TikTok @letsgetlitup_</a>
+    </span>
   </div>
 </footer>
 
