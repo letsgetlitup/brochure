@@ -1,6 +1,6 @@
 # Trippy Wire™ microsite
 
-Static one-page site for Inner Child Apparel LLC. No build step, no dependencies,
+Static one-page site for Inner Child Technology. No build step, no dependencies,
 no framework. It is one HTML file plus a folder of images.
 
 ```
